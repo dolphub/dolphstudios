@@ -1,0 +1,60 @@
+@mixin display-flex() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+    list-style: none;
+  
+  -ms-box-orient: horizontal;
+}
+
+@mixin flex-direction($dir) {
+    -webkit-flex-direction: $dir;
+    flex-direction: $dir;
+}
+
+$screen-tablet: 768px;
+.message {
+    
+    @keyframes fadein {
+        from { opacity: 0; }
+        to { opacity: 100; }
+    }
+    
+    animation: fadein .3s forwards;
+    
+    @include display-flex();
+    @include flex-direction(row);
+    padding: 5px 5px 0px 5px;
+    
+    .user {
+        text-transform: capitalize;
+    }
+    
+    img {
+        border-radius: 50%;
+    }    
+        
+    .post {
+        padding-left: 15px;
+        
+        p {
+            word-break: break-word;
+            font-weight: 400;
+        }
+    } 
+    
+    @media (max-width: $screen-tablet) {
+        img {
+            display: none;
+        }
+        
+        .timestamp {
+            display: none;
+            font-weight: 600;
+        }
+    }
+}
+

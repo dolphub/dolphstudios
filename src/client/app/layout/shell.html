@@ -1,0 +1,31 @@
+<div ng-controller="ShellController as vm">
+    <!--UnAuthenticaatedView-->
+    <div ng-if="!vm.auth.isAuthenticated" 
+        ng-include="'app/layout/landing/landing.html'"></div>
+    <!--/UnAuthenticaatedView-->
+    
+    <!--AuthenticaatedView-->
+    <div ng-if="vm.auth.isAuthenticated">
+        <header class="clearfix">
+            <div ng-include="'app/layout/nav/topnav.html'"></div>
+            
+        </header>
+        <div ng-include="'app/layout/nav/sidebar.html'"></div>
+        <chat></chat>
+        
+        <section id="main-section" class="main-content chat-active">     
+            <div class='container-fluid'>
+                <div ui-view class="shuffle-animation mainbar"></div>
+            </div>
+            
+            <!--<div ngplus-overlay
+                ngplus-overlay-delay-in="50"
+                ngplus-overlay-delay-out="700"
+                ngplus-overlay-animation="dissolve-animation">-->
+
+                <!--<div class="page-spinner-message overlay-message">{{vm.busyMessage}}</div>-->
+            </div>
+        </section>
+    </div>
+    <!--/AuthenticaatedView-->
+</div>

@@ -1,0 +1,52 @@
+{
+  "name": "node-pong",
+  "description": "Multiplayer Pong Game",
+  "main": "",
+  "authors": [
+    "Randy Mikkelsaar"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "pong",
+    "nodejs",
+    "angular"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "^4.5.0",
+    "bootstrap": "^3.3.6",
+    "angular": "angularjs#^1.4.9",
+    "auth0-angular": "^4.1.0",
+    "angular-animate": "^1.4.9",
+    "toastr": "^2.1.2",
+    "angular-ui-router": "^0.2.17",
+    "moment": "^2.11.1",
+    "a0-angular-storage": "^0.0.13",
+    "angular-jwt": "^0.0.9",
+    "auth0-lock": "^8.2.2",
+    "angular-sanitize": "^1.4.9",
+    "bootstrap-material-design": "^0.5.7",
+    "angular-socket-io": "^0.7.0",
+    "lodash": "^4.2.1"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
+      ]
+    }
+  }
+}

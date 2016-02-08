@@ -1,0 +1,29 @@
+comment-card {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    margin: 5px;        
+
+    img {
+        display: -webkit-flex;
+        display: flex;
+        flex-grow: 1;
+        border-radius: 50%;
+    }
+    .post {
+        margin-left: 10px;
+        flex-grow: 3;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        header {
+            a {
+                text-transform: capitalize;
+            }
+            font-weight: 600;
+        }
+        p {
+            font-size: 85%;
+        }
+    }
+}

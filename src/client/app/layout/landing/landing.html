@@ -1,0 +1,112 @@
+<div ng-controller="LandingController as vm">
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header" style="{{ vm.config.landing.header.background }}">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>{{ vm.config.app.title }}</h1>
+                        <h3>{{ vm.config.app.subTitle }}</h3>
+                        <hr class="intro-divider">
+                        <div class="login-box auth0-box" style="padding: 100px;">
+                            <h3>{{ vm.config.login.loginTitle }}</h3>
+                            <p>{{ vm.config.login.poweredBy }}</p>
+                            <a ng-click="vm.login()" class="btn btn-primary btn-raised">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /.container -->
+    </div> <!-- /.intro-header -->
+
+    <!-- Page Content -->
+
+    <div class="content-section-a">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer"> <div class="clearfix"></div>                    
+                    <h2 class="section-heading">GameEngine and Chat<br>Powered by SocketIO</h2>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <a href="http://socket.io/" target="_blank"><img class="img-responsive" src="/src/client/images/socket-io.png" alt=""></a>
+                </div>
+            </div>
+        </div> <!-- /.container -->
+    </div> <!-- /.content-section-a -->
+
+
+    <div class="content-section-b">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer"> <div class="clearfix"></div>                    
+                    <h2 class="section-heading">Full Stack Architecture<br>powered by MEAN</h2>
+                    <p class="lead">A Realtime Scalable Webapplication</p>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <a href="http://mean.io/#!/" target="_blank"><img class="img-responsive" src="/src/client/images/mean-stack.png" alt=""></a>                        
+                </div>
+            </div>
+        </div> <!-- /.container -->
+    </div> <!-- /.content-section-b -->
+    
+    <div class="content-section-a">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer"> <div class="clearfix"></div>                    
+                    <h2 class="section-heading">Security and Identity<br>Protected by OAuth2</h2>
+                    <p class="lead">A Universal Identity Platform</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <a href="https://auth0.com/" target="_blank"><img class="img-responsive" src="/src/client/images/auth0.png" alt=""></a>
+                </div>
+            </div>
+        </div> <!-- /.container -->
+    </div> <!-- /.content-section-b -->
+    
+    
+    
+
+    <div class="container"></div>
+	
+    <div style="{{ vm.config.landing.banner.background }}" class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 align-right">
+                    <h2>Sign in to Start Playing!</h2>
+                </div>
+            </div>
+
+        </div> <!-- /.container -->
+    </div> <!-- /.banner -->
+    
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#about">About</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#services">Services</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; Dolphstudios Company 2016. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

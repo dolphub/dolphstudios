@@ -1,0 +1,12 @@
+<section class="message fade">    
+    <a ng-if="!vm.data.info" href="javascript:void(0);"><img src="{{ vm.data.avatar }}" width="35" height="35"></a>
+    <div ng-if="!vm.data.info" class="post">
+        <a href="javascript:void(0);" class="user">{{ vm.data.user }}</a> <span class="timestamp">- {{ vm.getTime() }}</span>
+        <p>{{ vm.data.message }}</p>
+    </div>
+
+    
+    <div ng-if="vm.data.info" class="post">
+        {{ vm.data.user }} {{ vm.data.message }}
+    </div>
+</section>

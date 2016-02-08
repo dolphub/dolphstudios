@@ -1,0 +1,49 @@
+// ======================
+// Comment Card Styles
+
+@mixin flex-display($direction) {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: $direction;
+    flex-direction: $direction;
+}
+
+@mixin flex-direction($direction) {
+    -webkit-flex-direction: $direction;
+    flex-direction: $direction;
+}
+
+.comment-section { 
+    @include flex-display(column);
+    -webkit-align-items: left;
+    align-items: left;
+    -webkit-justify-content: center;
+    justify-content: center;
+    .comment {
+        @include flex-display(row);
+        margin: 5px;        
+        
+        img {
+            display: -webkit-flex;
+            display: flex;
+            flex-grow: 1;
+            border-radius: 50%;
+        }
+        .post {
+            margin-left: 10px;
+            flex-grow: 3;
+            @include flex-direction(column);   
+            header {
+                a {
+                    text-transform: capitalize;
+                }
+                font-weight: 600;
+            }
+            p {
+                font-size: 85%;
+            }
+        }         
+    }
+    
+} // Comment Card End
+// ======================

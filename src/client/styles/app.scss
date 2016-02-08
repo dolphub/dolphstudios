@@ -1,0 +1,40 @@
+$screen-tablet: 768px;
+$sidebar-width: 140px;
+
+
+/*override material colors*/
+.navbar {
+    background-color: #21455A;
+    // max-height: 50px;
+}
+
+.card {
+    padding: 8px;
+    margin-top: 10px;
+}
+
+#main-section {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.main-content {
+    margin-left: 195px;
+}
+
+.chat-active {
+    margin-right: 300px;
+}
+
+@media (max-width: $screen-tablet) {
+    .chat-active {
+        margin-right: $sidebar-width; 
+    }
+}
+
+
+.dropdown-toggle {
+    max-height: 50px;
+}
