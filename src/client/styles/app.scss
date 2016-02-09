@@ -1,6 +1,8 @@
 $screen-tablet: 768px;
 $sidebar-width: 140px;
 
+$desktop-width: 1199px;
+$desktop-topnav-correction: 70px;
 
 /*override material colors*/
 .navbar {
@@ -22,16 +24,21 @@ $sidebar-width: 140px;
 
 .main-content {
     margin-left: 195px;
-}
-
-.chat-active {
-    margin-right: 300px;
+    margin-top: 60px;
 }
 
 @media (max-width: $screen-tablet) {
     .chat-active {
         margin-right: $sidebar-width; 
     }
+}
+
+.chat-active {
+    margin-right: 300px;
+}
+
+@media (min-width: $desktop-width) {
+    top: $desktop-topnav-correction;    
 }
 
 

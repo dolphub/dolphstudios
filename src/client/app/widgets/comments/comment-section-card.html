@@ -3,8 +3,8 @@
     <textarea resizable="" ng-model="vm.messageText">
     </textarea>
     <button class="btn btn-raised btn-primary" ng-click="vm.postMessage()">Post Message</button>
-
     <input ng-model="vm.postsFilter" type="text" class="form-control col-md-8 label-floating posts-filter"  placeholder="Filter posts...">
+    
 
     <comment-card ng-repeat="item in vm.comments | filter:vm.postsFilter" data-comment="item"></comment-card>
 </div>

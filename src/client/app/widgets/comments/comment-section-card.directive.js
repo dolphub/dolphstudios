@@ -39,13 +39,9 @@
 
                 commentObj.$save(function(data) {
                     console.log(data);
+                    vm.messageText = "";
+                    getComments();
                 });
-                
-
-                vm.comments.push(commentObj);
-                vm.messageText = "";
-
-                
             }
 
             function getComments() {
