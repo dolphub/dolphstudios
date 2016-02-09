@@ -45,6 +45,11 @@
         }         
     }
 
+    .form-control::-webkit-input-placeholder { color: gray; font-weight: 700; }
+    .form-control:-moz-placeholder { color: gray; font-weight: 700; }
+    .form-control::-moz-placeholder { color: gray; font-weight: 700; }
+    .form-control:-ms-input-placeholder { color: gray; font-weight: 700; }
+
     textarea {
         resize: none;
         width: 100%;
