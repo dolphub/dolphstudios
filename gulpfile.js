@@ -86,7 +86,7 @@ function getNodeOptions(isDev) {
             'PORT': process.env.PORT || port,
             'NODE_ENV': isDev ? 'dev' : 'build'
         },
-        watch: [config.server, config.client]
+        watch: [config.server]
     };
 }
 

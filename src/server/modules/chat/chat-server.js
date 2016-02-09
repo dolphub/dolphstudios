@@ -1,5 +1,5 @@
 'use strict';
-var ioJwt = require('./../utils/middlewares/socketioJwt');
+var ioJwt = require('./../../utils/middlewares/socketioJwt');
 var logger = require('winston');
 module.exports = {
     start: socketServer

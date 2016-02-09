@@ -5,6 +5,7 @@
         .module('app.core', [
             'ngAnimate', 'ngSanitize',
             'auth0', 'angular-storage', 'angular-jwt', 'ngAnimate',
+            'ngResource',
             'blocks.logger', 'blocks.router'
         ]);
 })();

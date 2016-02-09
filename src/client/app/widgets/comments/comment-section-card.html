@@ -1,4 +1,7 @@
 <div class="card comment-section">
     <h3>{{ vm.title }} ({{ vm.comments.length }})</h3>    
+    <textarea resizable="" ng-model="vm.messageText">
+    </textarea>
+    <button class="btn btn-raised btn-primary" ng-click="vm.postMessage()">Post Message</button>
     <comment-card ng-repeat="item in vm.comments" data-comment="item"></comment-card>
 </div>

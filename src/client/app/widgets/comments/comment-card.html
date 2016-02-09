@@ -1,7 +1,7 @@
-<section class="comment">    
+<section class="comment fadein">    
     <a class="avatar" href="javascript:void(0);"><img src="{{ vm.comment.avatar }}" width="55" height="55"></a>
     <div class="post">
-        <header><a href="javascript:void(0);">{{ vm.comment.user }}</a> - <span>{{ vm.comment.date }}</span></header>
+        <header><a href="javascript:void(0);">{{ vm.comment.user }}</a> - <span>{{ vm.getTimestamp() }}</span></header>
         <p>{{ vm.comment.message }}</p>
     </div>
 </section>

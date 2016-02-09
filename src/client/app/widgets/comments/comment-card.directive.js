@@ -2,8 +2,8 @@
     angular.module('app.widgets')
     .directive('commentCard', Comment);
     
-    Comment.$inject = ['$timeout'];
-    function Comment($timeout) {
+    Comment.$inject = ['$timeout', 'moment'];
+    function Comment($timeout, moment) {
         var directive = {
             bindToController: true,
             controller: controller,
@@ -18,7 +18,14 @@
         /* @ngInject */
         function controller() {
             var vm = this;
-        }   
+            vm.getTimestamp = getTimestamp
+            
+            function getTimestamp() {
+                return moment.utc(vm.comment.date).fromNow();
+            }
+        }
+
+        
         return directive;
     }
 })();
