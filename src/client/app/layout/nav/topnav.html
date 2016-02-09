@@ -1,4 +1,4 @@
-<div ng-controller="TopNavController as vm" class="navbar navbar-purple">
+<div ng-controller="TopNavController as vm" class="navbar navbar-purple navbar-fixed-top">
   <div class="">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -20,7 +20,6 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li><a class="navbar-brand" href="javascript:void(0)">Help</a></li>
-        
         
         <li ng-show="!vm.isRightToggled"><a ng-click="vm.toggleRightChat()" class="navbar-brand" href="javascript:void(0)">Open Chat</a></li>
         <li ng-show="vm.isRightToggled"><a ng-click="vm.toggleRightChat()" class="navbar-brand" href="javascript:void(0)">Hide Chat</a></li>

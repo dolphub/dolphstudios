@@ -19,13 +19,20 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var utils = require('./utils/utils');
-var chat = require('./chat/chat-server');
+var chat = require('./modules/chat/chat-server');
 
+var mongoose = require('./utils/mongoose');
 
 
 if (process.env.NODE_ENV = 'development') {
     logger.level = 'debug';    
 }
+
+mongoose.loadModels();
+
+mongoose.connect(function(db) {
+    logger.info('Connected to mongo successfully!');
+});
 
 // Custom Middlewares
 var jwtCheck = require('./utils/middlewares/jwtCheck');
@@ -33,10 +40,11 @@ var four0four = require('./utils/middlewares/404.js')();
 
 app.use(express.static('./src/client/'));
 app.use(express.static('./'));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
     
 // Glob Routes
-utils.getGlobbedFiles(resolve(__dirname, './routes/**/*.js')).forEach(function(route) {
+utils.getGlobbedFiles(resolve(__dirname, './modules/**/*.routes.js')).forEach(function(route) {
     require(resolve(route))(app, jwtCheck);
 });
 
@@ -48,7 +56,7 @@ app.use('/*', express.static('./src/client/index.html'));
 app.use(morgan('combined'));
 
 server.listen(port, function() {
-    logger.info('\nExpress server listening on port ' + port);
+    logger.info('Express server listening on port ' + port);
     logger.info('env = ' + app.get('env'));
 });
 

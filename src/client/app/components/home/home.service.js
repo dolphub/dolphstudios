@@ -1,6 +1,6 @@
 (function() {
     angular.module('app.home')
-    .factory('homeservice', dataservice);
+    .factory('homeService', dataservice);
     
     dataservice.$inject = ['logger', '$http'];
     /* @ngInject */

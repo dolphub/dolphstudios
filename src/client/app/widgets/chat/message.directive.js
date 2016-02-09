@@ -21,7 +21,7 @@
             vm.getTime = getTime;
             
             function getTime() {
-                return moment(vm.data.date).fromNow();
+                return moment.utc(vm.data.date).fromNow();
             }
         }
         return directive;
