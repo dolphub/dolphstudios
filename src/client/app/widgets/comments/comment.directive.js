@@ -25,8 +25,6 @@
                 return moment.utc(new Date(vm.comment.date)).fromNow();
             }
         }
-
-        
         return directive;
     }
 })();

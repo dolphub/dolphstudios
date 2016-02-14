@@ -10,9 +10,9 @@
     transform: $transform;
 }
 
-ds-input {
+.ds-input {
     position: relative;
-    input {
+    .input {
         background-color: transparent;
         color: #555;
         // overrides
@@ -29,11 +29,11 @@ ds-input {
         }    
     }
 
-    span {
+    .underline {
         position: absolute;
         background-color: #0099FF;
         display: inline-block;
-        width: 100%;
+        width: 100% !important;
         height: 2px;
 
         @include transition(all 0.2s linear);
