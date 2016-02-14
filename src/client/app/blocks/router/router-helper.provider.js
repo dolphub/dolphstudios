@@ -94,7 +94,7 @@
                         var title = config.docTitle + ' ' + (toState.title || '');
                         $rootScope.title = title; // data bind to <title>
                         $timeout(function() {
-                            $.material.init()
+                            // $.material.init()
                         }, 0, true);
                     }
                 );

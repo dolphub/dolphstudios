@@ -4,14 +4,7 @@ comment-card {
     -webkit-flex-direction: row;
     flex-direction: row;
     margin: 5px;       
-
-    @keyframes fadein {
-        from { opacity: 0; }
-        to { opacity: 100; }
-    }
     
-    animation: fadein .3s forwards; 
-
     img {
         display: -webkit-flex;
         display: flex;

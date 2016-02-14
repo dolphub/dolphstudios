@@ -9,7 +9,6 @@
     /* @ngInject */
     function LandingController(config, auth, $location, store) {
         var vm = this;
-        $.material.init(); // Bootstrap Material Init
         vm.config = config;
         vm.login = authSignin;
         

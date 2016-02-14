@@ -1,19 +1,85 @@
-$screen-tablet: 768px;
+@import url(https://fonts.googleapis.com/css?family=Roboto:900);
+/*@import 'hacks';*/
+
+
+/** Apply gloabl font theme */
+* {
+    font-family: Roboto;
+}
+
+/*Color Templates*/
+$btn-primary: #0e7dcf;
+$primary-background: #22252A;
+$secondary-background: #2A3253;
+
+/** Main Mixins */
+@mixin secondary () {
+    background-image: linear-gradient(to bottom, #26c3f6 0%, #096aa1 100%);
+}
+
+@mixin primary () {
+
+}
+
+@mixin transition($transition) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    transition: $transition;
+}
+
+@mixin transform($transform) {
+    -webkit-transform: $transform;
+    -moz-transform: $transform;
+    transform: $transform;
+}
+/** End Main Mixins */
+
+/** Anchor Animations */
+a:not(.avatar) {
+    text-decoration: none;
+    @include transition(all .2s);
+    &:hover {
+        font-size: 130%;
+    };
+}
+
+.navbar-default {
+    background-color: $primary-background;
+    a {
+        /*color: $navcolor;*/
+    }
+}
+/** End Anchor Animation */
+
+
+/** Button Styles */
+.btn-main {
+    @include secondary();
+    box-shadow: 0 0 10px rgba(5,199,247,0.5), inset 0 0 1px 1px #05c7f7;
+}
+
+/**
+a:hover::before, a:hover::after {
+        -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+    transition: transform 0.3s, opacity 0.2s;
+}*/
+/*$screen-tablet: 768px;
 $sidebar-width: 140px;
 
 $desktop-width: 1199px;
-$desktop-topnav-correction: 70px;
+$desktop-topnav-correction: 70px;*/
 
 /*override material colors*/
-.navbar {
+/*.navbar {
     background-color: #21455A;
     // max-height: 50px;
-}
+}*/
 
-.card {
+/*.card {
     padding: 8px;
     margin-top: 10px;
-}
+}*/
 
 #main-section {
     -webkit-transition: all 0.3s ease-in-out;
@@ -23,25 +89,26 @@ $desktop-topnav-correction: 70px;
 }
 
 .main-content {
-    margin-left: 195px;
+    /*margin-left: 195px;*/
     margin-top: 60px;
+    height: 1400px;
 }
 
-@media (max-width: $screen-tablet) {
+/*@media (max-width: $screen-tablet) {
     .chat-active {
         margin-right: $sidebar-width; 
     }
-}
+}*/
 
-.chat-active {
+/*.chat-active {
     margin-right: 300px;
-}
+}*/
 
-@media (min-width: $desktop-width) {
+/*@media (min-width: $desktop-width) {
     top: $desktop-topnav-correction;    
-}
+}*/
 
-
+/*
 .dropdown-toggle {
     max-height: 50px;
-}
+}*/

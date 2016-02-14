@@ -48,6 +48,7 @@ module.exports = function() {
         ],
         less: client + 'styles/styles.less',
         sass: client + '**/*.scss',
+        customFonts: client + '**/*.ttf',
         sassConfig: sassConfig,
         root: root,
         server: server,

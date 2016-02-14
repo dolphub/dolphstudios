@@ -1,0 +1,42 @@
+@mixin transition($transition) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    transition: $transition;
+}
+
+@mixin transform($transform) {
+    -webkit-transform: $transform;
+    -moz-transform: $transform;
+    transform: $transform;
+}
+
+ds-input {
+    position: relative;
+    input {
+        background-color: transparent;
+        color: #555;
+        // overrides
+        border: none !important;
+        border-bottom: 1px solid #CCC !important;
+        border-radius: 0px !important;
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        &:focus+.underline {
+            @include transform(scale(1));
+        }    
+    }
+
+    span {
+        position: absolute;
+        background-color: #0099FF;
+        display: inline-block;
+        width: 100%;
+        height: 2px;
+
+        @include transition(all 0.2s linear);
+        @include transform(scale(0, 1));
+    }
+}

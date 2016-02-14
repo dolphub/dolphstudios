@@ -12,13 +12,13 @@
             scope: {                
                 'title': '@csTitle'
             },
-            templateUrl: 'app/widgets/comments/comment-section-card.html'
+            templateUrl: 'app/widgets/comments/comment-section.html'
         };  
         return directive;      
         
-        controller.$inject = ['store', '$http', 'Comments'];
+        controller.$inject = ['store', '$http', 'Comments', '$timeout'];
         /* @ngInject */
-        function controller(store, $http, Comments) {
+        function controller(store, $http, Comments, $timeout) {
             var vm = this;
             var profile = store.get('profile');
             vm.comments = [];
@@ -47,7 +47,6 @@
             function getComments() {
                 vm.comments = Comments.query();
             }
-
         }        
     }
 })();

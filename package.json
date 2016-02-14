@@ -6,9 +6,6 @@
     "start": "node ./server/app"
   },
   "dependencies": {
-    "angular-sanitize": "^1.4.9",
-    "angular-storage": "0.0.13",
-    "angular-ui-router": "^0.2.17",
     "body-parser": "^1.13.3",
     "chalk": "^1.1.1",
     "connect-mongo": "^1.1.0",
