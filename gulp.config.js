@@ -14,7 +14,8 @@ module.exports = function() {
     };
     var sassConfig = {
         errLogToConsole: true,
-        outputStyle: 'expanded'
+        outputStyle: 'expanded', 
+        includePaths: [ 'src/client/styles/']
     };
     var nodeModules = 'node_modules';
 

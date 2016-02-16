@@ -49,7 +49,7 @@
     "gulp-order": "^1.1.1",
     "gulp-plumber": "^1.0.1",
     "gulp-print": "^2.0.1",
-    "gulp-sass": "^2.1.1",
+    "gulp-sass": "^2.2.0",
     "gulp-task-listing": "^1.0.1",
     "jshint": "^2.9.1",
     "nodemon": "^1.8.1",

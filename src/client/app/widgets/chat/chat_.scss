@@ -1,7 +1,9 @@
 /* -- import Roboto Font ---------------------------- */
 @import "https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic";
+@import "base/variables";
+@import "base/mixins";
 
-.ds-chatbar {    
+.ds-chatbar {
     
     
     // Base variables
@@ -43,13 +45,9 @@
     
     $chatbox-height: 100px;
     $chatbox-background-color: $gray-lighter;
-    $desktop-chatbox-bottom: 17px;
-    $chatbox-bottom: 7px;
     $chatarea-background-color: #fff;
-    
-    
+
     $topnav-correction: 50px;
-    $desktop-topnav-correction: 60px;
 
     // Sidebar mixins
     // --------------------------------------------------
@@ -74,10 +72,7 @@
         white-space: nowrap;
     }
 
-    @mixin translate3d($x, $y, $z) {
-        -webkit-transform: translate3d($x, $y, $z);
-        transform: translate3d($x, $y, $z);
-    }
+
     @mixin transition($transition) {
         -webkit-transition: $transition;
         -o-transition: $transition;
@@ -261,17 +256,11 @@
     
     .chatbox {
         position: absolute;
-        bottom: $chatbox-bottom;
         width: 100%;
         background-color: $chatbox-background-color;
         padding: 0px 0px 0.4em 0.4em;
-        border: 3px solid #68A29D;
-    }
-
-    @media (min-width: $desktop-width) {
-        .chatbox {
-            bottom: $desktop-chatbox-bottom;
-        }
+        
+        bottom: 50px;
     }
     
     .chatarea {
@@ -293,7 +282,7 @@
 
     .btn-disconnect {
         padding: 2px 4px, 2px, 4px;
-        margin: 0px;
+        margin-top: -5px;
         float: right;
         margin-right: 5px;
     }
@@ -779,28 +768,19 @@
     }
     
     .sidebar-title {
-        opacity: 0.75;
+        background-color: $secondary-background !important;
+        color: $primary-text-color;
         font-size: 1.4em;
-        text-align: left;
-        background-color: #fff; 
+        text-align: left;        
         padding: 1px 0px 5px 5px;
-        
         border-bottom: 2px solid black;
+        
     }
     
     @media (max-width: $screen-tablet) {
         .sidebar.open {
             min-width: $sidebar-width;
             width: $sidebar-width;
-        }
-    }
-    
-    @media (min-width: $desktop-width) {
-        .sidebar.open {
-            top: $desktop-topnav-correction;
-        }
-        .sidebar {
-            top: $desktop-topnav-correction;
         }
     }
 }

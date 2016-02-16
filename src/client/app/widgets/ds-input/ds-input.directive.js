@@ -11,7 +11,7 @@
             controllerAs: 'vm',
             restrict: 'E',
             scope: {
-                'model': '=model',
+                'model': '=?model',
                 'placeholder': '@placeholder'
             },
             templateUrl: 'app/widgets/ds-input/ds-input.html'
@@ -28,7 +28,6 @@
                 }, 0);
             }
         }
-
         
     }
 

@@ -88,11 +88,7 @@
             vm.updatePoll = false;
             $interval(function() {
                 vm.update = !vm.update;
-            }, 30000);
-            setTimeout(function() {
-                $.material.init()
-            }, 0);
-            
+            }, 30000);            
         }  
 
         return directive;

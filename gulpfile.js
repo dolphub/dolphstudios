@@ -61,9 +61,9 @@ gulp.task('styles', function() {
     return gulp
         .src(config.sass)
         .pipe($.flatten())
-        .pipe($.plumber())
         .pipe($.sass(config.sassConfig).on('error', $.sass.logError))
         .pipe($.concat('styles.css'))
+        .pipe($.plumber())
         .pipe(gulp.dest(config.temp));
 });
 

@@ -30,6 +30,9 @@
 
             // Post Message
             function postMessage() {
+                if (!vm.messageText) {
+                    return;
+                }
                 var commentObj = new Comments({
                     user: profile.name || profile.nickname, 
                     avatar: profile.picture,

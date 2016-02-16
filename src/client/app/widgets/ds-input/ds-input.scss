@@ -1,18 +1,10 @@
-@mixin transition($transition) {
-    -webkit-transition: $transition;
-    -moz-transition: $transition;
-    transition: $transition;
-}
-
-@mixin transform($transform) {
-    -webkit-transform: $transform;
-    -moz-transform: $transform;
-    transform: $transform;
-}
+@import 'base/variables';
+@import 'base/mixins';
 
 .ds-input {
     position: relative;
     .input {
+        @include transition(all .3s linear);
         background-color: transparent;
         color: #555;
         // overrides
@@ -22,6 +14,7 @@
         &:focus {
             outline: none !important;
             box-shadow: none !important;
+            border-color: rgba(0,0,0,0) !important;
         }
 
         &:focus+.underline {
@@ -31,7 +24,7 @@
 
     .underline {
         position: absolute;
-        background-color: #0099FF;
+        background-color: #25C2F5;
         display: inline-block;
         width: 100% !important;
         height: 2px;

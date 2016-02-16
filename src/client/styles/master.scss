@@ -1,5 +1,7 @@
+@import "base/variables";
+@import "base/hacks";
+@include hacks();
 @import url(https://fonts.googleapis.com/css?family=Roboto:900);
-/*@import 'hacks';*/
 
 
 /** Apply gloabl font theme */
@@ -7,14 +9,18 @@
     font-family: Roboto;
 }
 
+body {
+    background-image: url('/images/main-background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 /*Color Templates*/
-$btn-primary: #0e7dcf;
-$primary-background: #22252A;
-$secondary-background: #2A3253;
+
 
 /** Main Mixins */
-@mixin secondary () {
-    background-image: linear-gradient(to bottom, #26c3f6 0%, #096aa1 100%);
+@mixin btn-gradient () {
+    background-image: linear-gradient(to bottom, #26c3f6 10%, #1286BC 90%);
 }
 
 @mixin primary () {
@@ -39,14 +45,19 @@ a:not(.avatar) {
     text-decoration: none;
     @include transition(all .2s);
     &:hover {
-        font-size: 130%;
+        // font-size: 130%;
     };
 }
 
 .navbar-default {
     background-color: $primary-background;
     a {
-        /*color: $navcolor;*/
+        color: $navcolor !important;
+    }
+    .ds-input {
+        .input {
+            color: $navcolor !important;
+        }        
     }
 }
 /** End Anchor Animation */
@@ -54,9 +65,35 @@ a:not(.avatar) {
 
 /** Button Styles */
 .btn-main {
-    @include secondary();
+    @include btn-gradient;
     box-shadow: 0 0 10px rgba(5,199,247,0.5), inset 0 0 1px 1px #05c7f7;
+    color: white;
+    &:hover, &:focus {
+        color: white;
+    }
+    &:active {
+        @include btn-gradient;
+    }
 }
+
+.card {
+    margin-top: 15px;
+    background-color: $secondary-background;
+    padding: 15px;
+    width: 100%;
+    color: $primary-text-color;
+    border: 3px solid $btn-primary;
+
+    textarea {
+        color: black;
+    }
+
+    a {
+        color: $btn-primary;
+    }
+}
+
+
 
 /**
 a:hover::before, a:hover::after {
@@ -91,7 +128,7 @@ $desktop-topnav-correction: 70px;*/
 .main-content {
     /*margin-left: 195px;*/
     margin-top: 60px;
-    height: 1400px;
+    // height: 1400px;
 }
 
 /*@media (max-width: $screen-tablet) {

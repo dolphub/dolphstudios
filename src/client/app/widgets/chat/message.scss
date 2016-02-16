@@ -1,19 +1,5 @@
-@mixin display-flex() {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: flex;
-    list-style: none;
-  
-  -ms-box-orient: horizontal;
-}
-
-@mixin flex-direction($dir) {
-    -webkit-flex-direction: $dir;
-    flex-direction: $dir;
-}
+@import 'base/variables';
+@import 'base/mixins';
 
 $screen-tablet: 768px;
 .message {
