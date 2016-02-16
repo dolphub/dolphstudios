@@ -1,6 +1,7 @@
 @import "base/variables";
-@import "base/hacks";
-@include hacks();
+@import "base/mixins";
+// @import "base/hacks";
+// @include hacks();
 @import url(https://fonts.googleapis.com/css?family=Roboto:900);
 
 
@@ -19,25 +20,7 @@ body {
 
 
 /** Main Mixins */
-@mixin btn-gradient () {
-    background-image: linear-gradient(to bottom, #26c3f6 10%, #1286BC 90%);
-}
 
-@mixin primary () {
-
-}
-
-@mixin transition($transition) {
-    -webkit-transition: $transition;
-    -moz-transition: $transition;
-    transition: $transition;
-}
-
-@mixin transform($transform) {
-    -webkit-transform: $transform;
-    -moz-transform: $transform;
-    transform: $transform;
-}
 /** End Main Mixins */
 
 /** Anchor Animations */
@@ -82,14 +65,14 @@ a:not(.avatar) {
     padding: 15px;
     width: 100%;
     color: $primary-text-color;
-    border: 3px solid $btn-primary;
+    border: 3px solid $action-primary;
 
     textarea {
         color: black;
     }
 
     a {
-        color: $btn-primary;
+        color: $action-primary;
     }
 }
 

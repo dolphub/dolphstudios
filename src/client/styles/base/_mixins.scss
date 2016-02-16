@@ -1,9 +1,7 @@
+@import "base/variables";
+
 @mixin btn-gradient () {
-    background-image: linear-gradient(to bottom, #26c3f6 10%, #1286BC 90%);
-}
-
-@mixin primary () {
-
+    background-image: linear-gradient(to bottom, $action-primary 10%, $action-secondary 90%);
 }
 
 @mixin transition($transition) {

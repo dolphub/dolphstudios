@@ -14,6 +14,7 @@
                 'model': '=?model',
                 'placeholder': '@placeholder'
             },
+            link: link,
             templateUrl: 'app/widgets/ds-input/ds-input.html'
         };
         return directive;
@@ -22,11 +23,16 @@
             var vm = this;
             vm.clearModel = clearModel;
 
+            // TODO:  Move functionality outside of directive
             function clearModel() {
                 $timeout(function() {
-                    vm.model = "";    
+                    vm.model = "";
                 }, 0);
             }
+        }
+
+        function link(scope, element, attributes) {
+            // TODO:  Bind the extra attributes to the input field
         }
         
     }
