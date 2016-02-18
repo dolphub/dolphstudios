@@ -18,10 +18,8 @@
         </div>
         
         
-        <!-- <ds-input class="chatbox" placeholder="Type here..." ng-enter="vm.sendMessage()" ng-disabled="!vm.isConnected()"
-            model="vm.textInput"></ds-input> -->
+        <ds-input class="chatbox" ds-placeholder="Type here..." ds-enter="vm.sendMessage" ds-disabled="!vm.isConnected()"
+            ds-model="vm.textInput"></ds-input>
 
-        <input type="text" class="form-control chatbox"  placeholder="Type here..."
-            ng-model="vm.textInput" ng-disabled="!vm.isConnected()" ng-enter="vm.sendMessage()">
     </aside>
 </div>

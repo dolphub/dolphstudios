@@ -49,7 +49,7 @@
                 if  (vm.textInput.length > 0) {
                     socket.emit('chat::message', { msg: vm.textInput });
                     vm.textInput = "";    
-                }                
+                }
             }
                         
             // Connection Successful

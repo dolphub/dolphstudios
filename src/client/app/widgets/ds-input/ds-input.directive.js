@@ -11,8 +11,10 @@
             controllerAs: 'vm',
             restrict: 'E',
             scope: {
-                'model': '=?model',
-                'placeholder': '@placeholder'
+                'model': '=?dsModel',
+                'enter': '=?dsEnter',
+                'disabled': '=?dsDisabled',
+                'placeholder': '@dsPlaceholder'
             },
             link: link,
             templateUrl: 'app/widgets/ds-input/ds-input.html'

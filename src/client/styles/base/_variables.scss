@@ -1,10 +1,18 @@
-$action-primary:                    #25C2F5; // Light blue
+$action-primary:                    #25C2F5; // Lighter blue
 $action-secondary:                  #1286BC; // Light blue
 
 $primary-text-color:                #ECECEC; // Off White
 
 $primary-background:                #1F2225; // Dark Gray
 $secondary-background:              #212528; // Darker Gray
-$secondary-background-opacity:      rgba(33,37,40,.75);
+$secondary-background-opacity:      rgba(33,37,40,.70); // Darker Gray RGBA
 
 $navcolor:                          #F0F0F0; // Light white color
+
+$screen-tablet:          768px;
+$desktop-width:          1199px;
+
+$sidebar-desktop-width: 300px;
+$sidebar-width: 140px;
+
+$transition-type: cubic-bezier(0.55, 0, 0.1, 1);
