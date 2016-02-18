@@ -80,31 +80,6 @@ a:not(.avatar) {
     }
 }
 
-
-
-/**
-a:hover::before, a:hover::after {
-        -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
-    -moz-transition: -moz-transform 0.3s, opacity 0.2s;
-    transition: transform 0.3s, opacity 0.2s;
-}*/
-/*$screen-tablet: 768px;
-$sidebar-width: 140px;
-
-$desktop-width: 1199px;
-$desktop-topnav-correction: 70px;*/
-
-/*override material colors*/
-/*.navbar {
-    background-color: #21455A;
-    // max-height: 50px;
-}*/
-
-/*.card {
-    padding: 8px;
-    margin-top: 10px;
-}*/
-
 #main-section {
     @include transition(all .5s $transition-type);
 }
@@ -113,8 +88,6 @@ $desktop-topnav-correction: 70px;*/
     /*margin-left: 195px;*/
     margin-top: 60px;
 }
-
-
 
 .chat-active {
     margin-right: 300px;
