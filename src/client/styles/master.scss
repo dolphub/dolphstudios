@@ -83,10 +83,10 @@ a:not(.avatar) {
 }
 
 .chat-active {
-    margin-right: 300px;
+    margin-right: $sidebar-desktop-width;
 }
 @media (max-width: $screen-tablet) {
     .chat-active {
-        margin-right: $sidebar-width; 
+        margin-right: $sidebar-width;
     }
 }
