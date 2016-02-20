@@ -21,14 +21,21 @@
             vm.title = "Chat";
             vm.textInput = "";
             vm.messages = [];
+            vm.isChatLocked = false;
+
             vm.sendMessage = sendMessage;
             vm.isConnected = isConnected;
             vm.connect = connect;
             vm.disconnect = disconnect;
+            vm.toggleChatLock = toggleChatLock;
 
             // Connect if we were already connected
             if (store.get('chat::connected')) {
                 vm.connect();
+            }
+
+            if (store.get('chat::lock')) {
+                vm.isChatLocked = store.get('chat::lock');
             }
             
             
@@ -81,7 +88,17 @@
                 vm.messages.push(msg);
                 scrollToMessage();
                 $rootScope.$emit('chatMessage');
+                if (!store.get('chat::open') && (!store.get('profile').name || store.get('profile').nickname
+                    != msg.user)) {
+                    toastr.info(msg.message, 'New Message From: ' + msg.user);
+                }                
             };
+
+            function toggleChatLock() {
+                vm.isChatLocked = !vm.isChatLocked;
+                store.set('chat::lock', vm.isChatLocked);
+                $rootScope.$emit('chat::lock', vm.isChatLocked);
+            }
 
             function scrollToMessage() {
                 // Animated scroll into view

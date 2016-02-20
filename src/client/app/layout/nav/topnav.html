@@ -20,22 +20,14 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
-
-
         <span ng-class="vm.unreadMessages > 0 ? 'faa-horizontal animated' : ''" ng-click="vm.toggleChat()"
           class="fa-stack fa-2x has-badge" data-count="{{ vm.unreadMessages }}">
           <i id="chat-icon" ng-class="vm.isChatToggled ? 'chat-icon' : ''" class="fa fa-2x fa-weixin"></i>
         </span>
-
-
-
         <li><a class="navbar-brand" href="javascript:void(0)"></i> Help</a></li>
-<!--         <li><a ng-class="vm.unreadMessages > 0 ? 'faa-shake animated' : ''" ng-click="vm.toggleChat()" 
-          class="navbar-brand" href="javascript:void(0)">
-            <i id="chat-icon" data-count="8,888,888" ng-class="vm.isChatToggled ? 'chat-icon' : ''" class="fa fa-2x fa-weixin"></i>
-          </a>
-        </li> -->
       </ul>
     </div>
   </div>
+
+  <div id="overlay" ng-click="vm.overlayClick()"></div>
 </div>

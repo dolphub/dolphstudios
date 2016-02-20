@@ -33,6 +33,10 @@
         
         bottom: 50px;
     }
+
+    a {
+        color: $action-primary;
+    }
     
     .chatarea {
         width: 100%;
@@ -56,6 +60,27 @@
         float: right;
         margin-right: 5px;
     }
+
+    .dropdown {
+        .chat-settings {
+            color: $action-primary;
+            cursor: pointer;
+            margin-top: -33px;
+            margin-right: 10px;
+        }    
+        .dropdown-menu {
+            color: $action-primary !important;
+            padding: 0px;
+            a{
+                padding: 10px 10px 10px 15px;
+                &:hover {
+                    background-color: $action-primary !important;
+                    color: $navcolor;
+                }
+            }
+        }
+    }
+    
 
     // Sidebar design template
     //
@@ -116,11 +141,6 @@
     }
     .sidebar-stacked {
         left: 0;
-    }
-    .sidebar-fixed-left {
-        left: 0;
-        box-shadow: 2px 0px 15px rgba(0,0,0,0.35);
-        -webkit-box-shadow: 2px 0px 15px rgba(0,0,0,0.35);
     }
     .sidebar-fixed-right {
         right: 0;

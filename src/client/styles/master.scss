@@ -90,3 +90,17 @@ a:not(.avatar) {
         margin-right: $sidebar-width;
     }
 }
+
+#overlay {
+    position: absolute;
+    background-color: transparent;
+    height: calc(100vh);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    
+}
+
+.overlay-show {
+    right: $sidebar-desktop-width;
+}
