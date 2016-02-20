@@ -104,3 +104,9 @@ a:not(.avatar) {
 .overlay-show {
     right: $sidebar-desktop-width;
 }
+
+@media (max-width: $screen-tablet) {
+    .overlay-show {
+        right: $sidebar-width;
+    }
+}
