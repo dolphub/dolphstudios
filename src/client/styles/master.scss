@@ -35,17 +35,10 @@ a:not(.avatar) {
     };
 }
 
-.navbar-default {
-    background-color: $primary-background;
-    a {
-        color: $navcolor !important;
-    }
-}
-
 .ds-input {
     .input {
         color: $navcolor !important;
-    }        
+    }
 }
 /** End Anchor Animation */
 

@@ -1,11 +1,11 @@
 <div class="ds-chatbar">
     <!-- Chat Bar -->
-    <aside id="chatbar" class="sidebar sidebar-fixed-right sidebar-default open" role="navigation">
+    <aside id="chatbar" class="sidebar sidebar-fixed-right sidebar-default" role="navigation">
         <!-- Sidebar header -->
         <div class="sidebar-title">
             <h3>{{ vm.title }} 
                 <span ng-if="!vm.isConnected()" class="chat-disconnected">Offline</span>
-                <button ng-if="vm.isConnected()" ng-click="vm.disconnect()" 
+                <button ng-if="vm.isConnected()" ng-click="vm.disconnect()"
                         class="btn btn-main btn-disconnect btn-sm">Exit</button>
             </h3>
         </div>
@@ -16,10 +16,7 @@
                 <message ng-repeat="msg in vm.messages" data="msg"></message>
             </div>
         </div>
-        
-        
         <ds-input class="chatbox" ds-placeholder="Type here..." ds-enter="vm.sendMessage" ds-disabled="!vm.isConnected()"
             ds-model="vm.textInput"></ds-input>
-
     </aside>
 </div>

@@ -6,18 +6,21 @@
         .controller('TopNavController', topNavController);
 
         
-    topNavController.$inject = ['$scope', 'auth', 'store', 
+    topNavController.$inject = ['$rootScope', 'auth', 'store', 
         '$state', 'toastr', '$window', 'config'];
     /* @ngInject */
-    function topNavController($scope, auth, store, $state, toastr, $window, config) {
+    function topNavController($rootScope, auth, store, $state, toastr, $window, config) {
         var vm = this;
-        vm.scope = $scope;
+        vm.rootScope = $rootScope;
         vm.profile = store.get('profile');
         vm.logout = logout;
         vm.toggleLeftBar = toggleLeftBar;
-        vm.toggleRightChat = toggleRightChat;
+        vm.toggleChat = toggleChat;
         vm.isLeftToggled = true;
-        vm.isRightToggled = true;
+        vm.isChatToggled = false;
+        vm.unreadMessages = 0;
+        onStart();
+
         
         function logout() {
             auth.signout();
@@ -29,15 +32,43 @@
         function toggleLeftBar() {
             $('#sidebar').toggleClass('open');
             $('#main-section').toggleClass('main-content');
-            // chat-active
             vm.isLeftToggled = !vm.isLeftToggled;
         }  
         
-       function toggleRightChat() {
+        function toggleChat(open) {
             $('#chatbar').toggleClass('open');
             $('#main-section').toggleClass('chat-active');
-            // chat-active
-            vm.isRightToggled = !vm.isRightToggled;
+            vm.isChatToggled = !vm.isChatToggled;
+            vm.unreadMessages = 0;
+
+            // Save the state of the chat
+            store.set('chat::open', vm.isChatToggled);
         }
+
+        function openChat() {
+            if (!vm.isChatToggled) {
+                toggleChat();
+            }
+        }
+
+        function closeChat() {
+            if (vm.isChatToggled) {
+                toggleChat();
+            }
+        }
+
+        $rootScope.$on('chatMessage', function() {
+            if (!vm.isChatToggled) {
+                vm.unreadMessages++;
+            }
+        });
+
+        function onStart() {
+            if (store.get('chat::open')) {
+                openChat();
+            } else {
+                closeChat();
+            }
+        };
     }
 })();

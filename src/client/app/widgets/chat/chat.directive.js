@@ -15,8 +15,8 @@
         return directive;
         
         /* @ngInject */
-        controller.$inject = ['socket', 'toastr', 'moment', '$interval', '$anchorScroll'];
-        function controller(socket, toastr, $interval, $anchorScroll) {
+        controller.$inject = ['$rootScope', 'socket', 'toastr', 'moment', '$interval', '$anchorScroll', 'store'];
+        function controller($rootScope, socket, toastr, $interval, $anchorScroll, store) {
             var vm = this;
             vm.title = "Chat";
             vm.textInput = "";
@@ -25,19 +25,24 @@
             vm.isConnected = isConnected;
             vm.connect = connect;
             vm.disconnect = disconnect;
+
+            // Connect if we were already connected
+            if (store.get('chat::connected')) {
+                vm.connect();
+            }
             
             
             function connect() {
                 socket.connect();
-
                 socket.on('chatconnection::success', onConnectionSuccess);
                 socket.on('chat::message', onChatMessage);
                 socket.on('chat::disconnect', onDisconnection);
-
+                store.set('chat::connected', true);
             }
 
             function disconnect() {
                 socket.disconnect();
+                store.remove('chat::connected');
             }
 
             function isConnected() {
@@ -48,7 +53,7 @@
             function sendMessage() {
                 if  (vm.textInput.length > 0) {
                     socket.emit('chat::message', { msg: vm.textInput });
-                    vm.textInput = "";    
+                    vm.textInput = "";
                 }
             }
                         
@@ -75,6 +80,7 @@
             function onChatMessage(msg) {
                 vm.messages.push(msg);
                 scrollToMessage();
+                $rootScope.$emit('chatMessage');
             };
 
             function scrollToMessage() {

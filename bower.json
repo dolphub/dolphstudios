@@ -36,7 +36,8 @@
     "angular-socket-io": "^0.7.0",
     "lodash": "^4.2.1",
     "q": "#1.0.1",
-    "angular-resource": "^1.5.0"
+    "angular-resource": "^1.5.0",
+    "font-awesome-animation": "^0.0.8"
   },
   "overrides": {
     "bootstrap": {

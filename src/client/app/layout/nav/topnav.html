@@ -20,11 +20,21 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a class="navbar-brand" href="javascript:void(0)">Help</a></li>
-        <li ng-show="!vm.isRightToggled"><a ng-click="vm.toggleRightChat()" class="navbar-brand" href="javascript:void(0)">Open Chat</a></li>
-        <li ng-show="vm.isRightToggled"><a ng-click="vm.toggleRightChat()" class="navbar-brand" href="javascript:void(0)">Hide Chat</a></li>
 
-        <i data-count="3" class="fa fa-envelope fa-5x fa-border icon-grey badge"></i>
+
+        <span ng-class="vm.unreadMessages > 0 ? 'faa-horizontal animated' : ''" ng-click="vm.toggleChat()"
+          class="fa-stack fa-2x has-badge" data-count="{{ vm.unreadMessages }}">
+          <i id="chat-icon" ng-class="vm.isChatToggled ? 'chat-icon' : ''" class="fa fa-2x fa-weixin"></i>
+        </span>
+
+
+
+        <li><a class="navbar-brand" href="javascript:void(0)"></i> Help</a></li>
+<!--         <li><a ng-class="vm.unreadMessages > 0 ? 'faa-shake animated' : ''" ng-click="vm.toggleChat()" 
+          class="navbar-brand" href="javascript:void(0)">
+            <i id="chat-icon" data-count="8,888,888" ng-class="vm.isChatToggled ? 'chat-icon' : ''" class="fa fa-2x fa-weixin"></i>
+          </a>
+        </li> -->
       </ul>
     </div>
   </div>
