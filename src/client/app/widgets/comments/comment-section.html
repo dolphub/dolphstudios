@@ -4,5 +4,12 @@
     </textarea>
     <button class="btn btn-main" ng-click="vm.postMessage()">Post Message</button>
     <ds-input ds-placeholder="Filter posts..." ds-model="vm.postsFilter" ></ds-input>
+
+    <ds-spinner ds-promise="vm.promise"></ds-spinner>
+
+    <!-- <wave-spinner></wave-spinner> -->
+<!--     <three-bounce-spinner></three-bounce-spinner>
+    <cube-grid-spinner></cube-grid-spinner> -->
+
     <comment-card ng-repeat="item in vm.comments | filter:vm.postsFilter" data-comment="item"></comment-card>
 </div>

@@ -10,7 +10,9 @@ module.exports.getComments = function (req, res) {
             logger.error('Error retrieving comments from database', err);
             res.status(400).send({ error: err });
         } else {
-            res.json(comments);
+            setTimeout(function() {
+                res.json(comments);
+            }, 2000);
         }
     }).sort({ date: -1 });
 };

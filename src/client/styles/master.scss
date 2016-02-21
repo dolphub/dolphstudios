@@ -110,3 +110,39 @@ a:not(.avatar) {
         right: $sidebar-width;
     }
 }
+
+// Spinner Style
+.wave-spinner,
+.double-bounce-spinner,
+.chasing-dots-spinner,
+.spinning-dots,
+.three-bounce-spinner,
+.cube-grid-spinner
+ {
+    margin-top: 30px;
+    * {
+        @include btn-gradient();
+    }
+}
+
+.three-dots-row-spinner {
+    margin-top: 30px;
+    @include spinning-gradient();
+    // background-color: $action-primary !important;
+}
+
+.wandering-cubes-spinner {
+    margin-top: 30px;
+    &:before, &:after {
+        @include spinning-gradient();
+    }
+}
+
+.spinning-dots-spinner {
+    margin-top: 30px;
+    * {
+        .circle1, .circle2, .circle3, .circle4 {
+            @include spinning-gradient();   
+        }
+    }
+}

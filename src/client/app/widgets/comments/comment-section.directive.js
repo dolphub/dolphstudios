@@ -21,6 +21,7 @@
         function controller(store, $http, Comments, $timeout) {
             var vm = this;
             var profile = store.get('profile');
+            vm.promise = null;
             vm.comments = [];
             vm.getComments = getComments;
             vm.getComments();
@@ -48,7 +49,12 @@
             }
 
             function getComments() {
-                vm.comments = Comments.query();
+                vm.promise = Comments.query().$promise;
+                console.debug(vm.promise.$$state.status);
+                vm.promise.then(function(data) {
+                    console.debug(vm.promise.$$state.status);
+                    vm.comments = data;
+                });
             }
         }        
     }

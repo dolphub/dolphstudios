@@ -113,9 +113,9 @@
 
         function unlockChat() {
             if (vm.isChatToggled) {
-                $('#main-section').removeClass('chat-active');    
+                $('#main-section').removeClass('chat-active');
+                $('#overlay').addClass('overlay-show');
             }
-            $('#overlay').addClass('overlay-show');
         }
        
 
