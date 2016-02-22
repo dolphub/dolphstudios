@@ -15,7 +15,7 @@
             scope: {
                 'promise': '=?dsPromise'
             },
-            template: '<span style="height: 75px;"><cube-grid-spinner ng-if="vm.showSpinner"></cube-grid-spinner></span>'
+            template: '<span style="height: 75px;" ng-if="vm.showSpinner"><cube-grid-spinner></cube-grid-spinner></span>'
             // rotating-plane-spinner
             // double-bounce-spinner
             // wave-spinner
@@ -30,16 +30,14 @@
         };
         return directive;
 
-        dsSpinnerController.$inject = ['$scope'];
-        function dsSpinnerController($scope) {
+        function dsSpinnerController() {
             var vm = this;
         }
 
-
         function link(scope, element, attrs) {
-            scope.$watch(attrs.dsPromise, function(oldVal, newVal) {
+            scope.$watch(attrs.dsPromise, function(promise) {
                 scope.vm.showSpinner = true;
-                oldVal.then(function() {
+                promise.then(function() {
                     scope.vm.showSpinner = false;
                 }, function() {
                     scope.vm.showSpinner = false;
