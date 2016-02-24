@@ -5,7 +5,7 @@
     <!-- Material sidebar -->
     <aside id="sidebar" class="sidebar sidebar-fixed-left sidebar-default open" role="navigation">
         <!-- Sidebar header -->
-        <div class="sidebar-header header-cover" style="background-image: url(http://2.bp.blogspot.com/-2RewSLZUzRg/U-9o6SD4M6I/AAAAAAAADIE/voax99AbRx0/s1600/14%2B-%2B1%2B%281%29.jpg);">
+        <div class="sidebar-header header-cover">
             <!-- Top bar -->
             <div class="top-bar"></div>
             <!-- Sidebar toggle button -->
@@ -31,7 +31,7 @@
                     <li><a ng-click="vm.logout()" href="javascript:void(0)" tabindex="-1"><i class="fa fa-sign-out"></i> Logout</a><li>
                 </ul>
             </li>
-            <li ng-repeat="route in vm.navRoutes">
+            <li ng-repeat="route in vm.navRoutes" ng-class="vm.$state.current.name == route.name ? 'active' : 'inactive'">
                 <a ui-sref="{{ route.name }}" ng-bind-html="route.settings.content">{{route.title}}</a>
             </li>
             
@@ -50,6 +50,7 @@
             <li><a href="#">Spam<span class="sidebar-badge">456</span></a></li>
             <li><a href="#">Follow Up<span class="sidebar-badge badge-circle">i</span></a></li>-->
         </ul>
+        {{vm.$state.current.name}}
     </aside>
 
 </div>

@@ -50,7 +50,7 @@
         
         function toggleLeftBar() {
             $('#sidebar').toggleClass('open');
-            $('#main-section').toggleClass('main-content');
+            $('#main-section').toggleClass('sidebar-active');
             vm.isLeftToggled = !vm.isLeftToggled;
         }  
         

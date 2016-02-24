@@ -11,7 +11,8 @@
     function SidebarController (config, auth, store, $state, routerHelper, socket) {
          var vm = this;
          
-         vm.profile = store.get('profile');         
+         vm.profile = store.get('profile');     
+         vm.$state = $state;    
          vm.toggleState = toggleState;
          vm.logout = logout;
          

@@ -77,9 +77,12 @@ a:not(.avatar) {
     @include transition(all .5s $transition-type);
 }
 
-.main-content {
-    /*margin-left: 195px;*/
+.main-content {    
     margin-top: 60px;
+}
+
+.sidebar-active {
+    margin-left: 195px;
 }
 
 .chat-active {
