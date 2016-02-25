@@ -15,7 +15,7 @@
             scope: {
                 'promise': '=?dsPromise'
             },
-            template: '<span style="height: 75px;" ng-if="vm.showSpinner"><cube-grid-spinner></cube-grid-spinner></span>'
+            template: '<span style="height: 75px;" ng-if="vm.showSpinner"><three-bounce-spinner></three-bounce-spinner></span>'
             // rotating-plane-spinner
             // double-bounce-spinner
             // wave-spinner

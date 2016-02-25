@@ -18,7 +18,7 @@ module.exports.getComments = function (req, res) {
         } else {
             setTimeout(function() {
                 res.json(comments);
-            }, 0);
+            }, 1500);
         }
     }).sort({ date: -1 }).skip(skipCount).limit(maxCount);
 };

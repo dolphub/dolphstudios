@@ -16,7 +16,7 @@
                 <img src="{{ vm.profile.picture }}">
             </div>
             <!-- Sidebar brand name -->
-            <a href="javascript:void(0)" data-target="#settings-dropdown" data-toggle="dropdown" class="sidebar-brand"  >
+            <a href="javascript:void(0)" data-target="#settings-dropdown" data-toggle="dropdown" class="sidebar-brand">
                 {{ vm.profile.name || vm.profile.nickname }}
                 <b class="caret"></b>
             </a>
@@ -26,31 +26,18 @@
         <ul class="nav sidebar-nav">
             <li class="dropdown">
                 <ul id="settings-dropdown" class="dropdown-menu">
-                    <li><a ui-sref="profile" tabindex="-1"><i class="fa fa-user"></i> Profile</a></li>
-                    <li><a ui-sref="settings" tabindex="-1"><i class="fa fa-cogs"></i> Settings</a></li>
-                    <li><a ng-click="vm.logout()" href="javascript:void(0)" tabindex="-1"><i class="fa fa-sign-out"></i> Logout</a><li>
+                    <li ui-sref-active="active"><a ui-sref="profile" tabindex="-1"><i class="fa fa-user"></i> Profile</a></li>
+                    <li ui-sref-active="active"><a ui-sref="settings" tabindex="-1"><i class="fa fa-cogs"></i> Settings</a></li>
+                    <li ui-sref-active="active"><a ng-click="vm.logout()" href="javascript:void(0)" tabindex="-1"><i class="fa fa-sign-out"></i> Logout</a><li>
+                    <li class="divider"></li>
                 </ul>
             </li>
-            <li ng-repeat="route in vm.navRoutes" ng-class="vm.$state.current.name == route.name ? 'active' : 'inactive'">
+            <li ng-repeat="route in vm.navRoutes" ui-sref-active="active">
                 <a ui-sref="{{ route.name }}" ng-bind-html="route.settings.content">{{route.title}}</a>
             </li>
             
             <li class="divider"></li>
-            <!--<li class="dropdown">
-                <a class="ripple-effect dropdown-toggle" href="#" data-toggle="dropdown">
-                    All Mail
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#" tabindex="-1">Social<span class="sidebar-badge">12</span></a></li>
-                    <li><a href="#" tabindex="-1">Promo<span class="sidebar-badge">0</span></a></li>
-                </ul>
-            </li>
-            <li><a href="#">Trash<span class="sidebar-badge">3</span></a></li>
-            <li><a href="#">Spam<span class="sidebar-badge">456</span></a></li>
-            <li><a href="#">Follow Up<span class="sidebar-badge badge-circle">i</span></a></li>-->
         </ul>
-        {{vm.$state.current.name}}
     </aside>
 
 </div>

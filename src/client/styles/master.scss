@@ -11,20 +11,13 @@
 }
 
 body {
-    background-image: url('/images/main-background.png');
+    background-image: $primary-background-image;
     // background-repeat: no-repeat;
     background-attachment: fixed;
     // overflow: hidden;
     width: 100%;
     height: 100%;
 }
-
-/*Color Templates*/
-
-
-/** Main Mixins */
-
-/** End Main Mixins */
 
 /** Anchor Animations */
 a:not(.avatar) {

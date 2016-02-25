@@ -84,82 +84,13 @@
     position: absolute;
     top: 50px;
     bottom: 0px;
-    
-
-    [class^="md-"], [class*=" md-"] {
-        display: inline-block;
-        font: normal normal normal 14px/1 'Material Design Iconic Font';
-        font-size: inherit;
-        speak: none;
-        text-rendering: auto;
-
-        // Better Font Rendering
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-    .md {
-        line-height: inherit;
-        vertical-align: bottom;
-    }
-
-    .md-inbox:before {
-        content: "\f10c";
-    }
-    .md-star:before {
-        content: "\f2e5";
-    }
-    .md-send:before {
-        content: "\f119";
-    }
-    .md-drafts:before {
-        content: "\f107";
-    }
-    .md-arrow-back:before {
-        content: "\f297";
-    }
-    .md-arrow-forward:before {
-        content: "\f298";
-    }
-
-    /* -- You can use this sidebar in Bootstrap (v3) projects. HTML-markup like Navbar bootstrap component will make your work easier. -- */
-    // $import "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css";
-
-
-    /* -- Box model ------------------------------- */
-    *,
-    *:after,
-    *:before {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-
-    /* -- Demo style ------------------------------- */
-
 
     .top-bar {
         height: 25px;
         background: rgba(0, 0, 0, 0.1);
     }
 
-    /* -- Google typography ------------------------------- */
-    .headline {
-        font-size: 24px;
-        font-weight: 300;
-        line-height: 1.1;
-        color: #212121;
-        text-transform: inherit;
-        letter-spacing: inherit;
-    }
-    .subhead {
-        font-size: 16px;
-        font-weight: 300;
-        line-height: 1.1;
-        color: #212121;
-        text-transform: inherit;
-        letter-spacing: inherit;
-    }
+
 
     /* -- Bootstrap-like style ------------------------------- */
     .caret {
@@ -173,28 +104,13 @@
         border-left: 4px solid transparent;
     }
 
-    .dropdown-menu {
-        display: none;
-    }
-
-    /* -- Constructor style ------------------------------- */
-    .constructor {
-        position: relative;
-        margin: 0;
-        padding: 0 50px;
-        @include transition(all 0.5s cubic-bezier(0.55, 0, 0.1, 1));
-    }
-
-    // Positioning layout: default
-    .sidebar, .wrapper {
-        display: table-cell;
-        vertical-align: top;
-    }
+ 
 
     // Positioning layout: stacked
     .sidebar-stacked.open + .wrapper .constructor{
         margin-left: $sidebar-desktop-width;
     }
+
     @media (max-width: $screen-tablet) {
         .sidebar-stacked.open + .wrapper .constructor{
             margin-left: $sidebar-width; 
@@ -226,12 +142,6 @@
             position: absolute;
             right: $sidebar-padding + $sidebar-badge-size/2 - 4px; // caret centered by badge position; 4px - caret width
             top: $sidebar-nav-height/2;
-        }
-        // positioning badge in sidebar block
-        .sidebar-badge {
-            position: absolute;
-            right: $sidebar-padding;
-            top: ($sidebar-nav-height - $sidebar-badge-size)/2 ;
         }
     }
 
@@ -312,23 +222,27 @@
             margin: 0;
             padding: 0;
 
+            a {
+                position: relative;
+                cursor: pointer;
+                user-select: none;
+                @include sidebar-block();
+                color: $navcolor;
+
+                &:hover {
+                    background-color: $action-secondary;
+                }
+            }
+
             //** Links
             //----------------
             li {
                 position: relative;
-                list-style-type: none;
+                list-style-type: none;   
 
-                a {
-                    position: relative;
-                    cursor: pointer;
-                    user-select: none;
-                    @include sidebar-block();
-                    color: $navcolor;
-
-                    &:hover {
-                        background: $action-secondary;
-                    }
-                }
+                i {
+                    color: -hover-color;
+                }         
             }
 
             //** Dropdown menu
@@ -341,21 +255,45 @@
                 border: none;
                 border-radius: 0;
                 @include box-shadow(none);
-            }
-            // li:hover > a, li > a:hover {
-            //     color: $navcolor;
-            //     background-color: $action-primary;
+            }   
 
-            //     i {
-            //         color: -hover-color;
-            //     }
-            // }
-            li:focus > a, li > a:focus {
+            > .active > a {
                 color: $action-primary;
                 background-color: transparent;
 
-                i {
-                    color: -hover-color;
+                &:hover {
+                    color: $navcolor;
+                    background-color: $action-primary;
+                }
+            }       
+
+            // Dropdown menu items
+            > .dropdown {         
+                > .dropdown-menu {
+                    background-color: transparent;
+                    background-image: url('/images/dark_wall.jpg');
+                    > ul {
+                        background-color: transparent;
+                    }
+
+                    > li > a {
+                        background-color: transparent;
+                        &:hover {
+                            color: $navcolor;
+                            background-color: $action-secondary;
+                        }
+                    }
+
+                    .active > a {
+                        color: $action-primary;
+                        background-color: transparent;
+
+                        &:hover {
+                            color: $navcolor;
+                            background-color: $action-primary;
+                        }
+                    }  
+
                 }
             }
 
@@ -368,66 +306,26 @@
             //     }
             // }
 
-            > .active > a {
-                &,
-                &:hover,
-                &:focus {
-                    color: $action-primary;
-                    background-color: transparent;
-                }
-            }
-
-            > .inactive > a {
-                &,
-                &:hover,
-                &:focus {
-                    color: $navcolor;
-                    background-color: transparent;
-                }
-            }
+            // > .inactive > a {
+            //     &,
+            //     &:hover,
+            //     &:focus {
+            //         color: $navcolor;
+            //         background-color: transparent;
+            //     }
+            // }
 
 
-            > .disabled > a {
-                &,
-                &:hover,
-                &:focus {
-                    color: red;
-                    background-color: red;
-                }
-            }
-            > li > .ink {
-            //background: #80d8ff;
-            //opacity: 0.5;
-            }
+            // > .disabled > a {
+            //     &,
+            //     &:hover,
+            //     &:focus {
+            //         color: red;
+            //         background-color: red;
+            //     }
+            // }
 
-            // Dropdown menu items
-            > .dropdown {
-                Remove background color from open dropdown
-                > .dropdown-menu {
-
-                    // background-color: $;
-
-                    > li > a {
-                        background-color: transparent;
-                        &:focus {
-                            background-color: transparent;
-                            color: $navcolor;
-                        }
-                        &:hover {
-                            color: $navcolor;
-                        }
-                    }
-
-                    > .active > a {
-                        &,
-                        &:hover,
-                        &:focus {
-                            color: $action-primary;
-                            // background-color: $navcolor;
-                        }
-                    }
-                }
-            }
+           
         }
     }
 
@@ -440,8 +338,7 @@
         .sidebar-header {
             position: relative;
             height: $sidebar-desktop-width * 9/16; // 16:9 header dimension
-            margin-bottom: $sidebar-divider;
-            // @include transition(all .2s ease-in-out);
+            
 
             // Brand/project cover
             // Addition class for sidebar header
@@ -477,11 +374,7 @@
             @include clearfix();
         }
 
-        //** Sidebar arrow
-        //----------------
-        .icon-material-sidebar-arrow:before {
-            content: "\e610"; // icon-material-arrow-back
-        }
+
 
         //** Brand/project image
         //
@@ -513,53 +406,16 @@
             }
         }
 
-        //** Sidebar badge
-        //----------------
-        .sidebar-badge {
-            display: inline-block;
-            min-width: $sidebar-badge-size;
-            height: $sidebar-badge-size;
-            line-height: $sidebar-badge-size;
-            padding: 0 3px;
-            font-size: $sidebar-badge-font-size;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            &.badge-circle {
-            border-radius: 50%;
-            }
-        }
-
         //** Sidebar divider
         //----------------
         .sidebar-divider, .sidebar-nav .divider {
             position: relative;
             display: block;
-            height: 1px;
-            margin: $sidebar-divider 0;
+            height: 2px;
+            margin-top: 0px;
+            margin-bottom: 0px;
             padding: 0;
             overflow: hidden;
-        }
-
-        //** Sidebar text
-        //----------------
-        .sidebar-text {
-            @include sidebar-block();
-        }
-
-        //** Sidebar icons
-        //----------------
-        .sidebar-icon {
-            display: inline-block;
-            margin-right: $sidebar-padding;
-            min-width: $sidebar-icon-width;
-            width: $sidebar-icon-width;
-            text-align: left;
-            font-size: $sidebar-icon-size;
-
-            &:before, &:after {
-                vertical-align: middle;
-            }
         }
     }
 
@@ -591,25 +447,7 @@
     .sidebar-stacked {
         left: 0;
     }
-    .sidebar-fixed-left {
-        left: 0;
-        box-shadow: 2px 0px 15px rgba(0,0,0,0.35);
-        -webkit-box-shadow: 2px 0px 15px rgba(0,0,0,0.35);
-    }
-    .sidebar-fixed-right {
-        right: 0;
-        box-shadow: 0px 2px 15px rgba(0,0,0,0.35);
-        -webkit-box-shadow: 0px 2px 15px rgba(0,0,0,0.35);
-
-        @include translate3d($sidebar-desktop-width, 0, 0);
-            &.open {
-                @include translate3d(0, 0, 0);
-            }
-            .icon-material-sidebar-arrow:before {
-                content: "\e614"; // icon-material-arrow-forward
-            }
-    }
-
+   
     // Sidebar size
     //
     // Change size of sidebar and sidebar elements on small screens
