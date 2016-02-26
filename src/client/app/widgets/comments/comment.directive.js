@@ -12,7 +12,7 @@
             scope: {
                 'comment': '='
             },
-            templateUrl: 'app/widgets/comments/comment-card.html'
+            templateUrl: 'app/widgets/comments/comment.html'
         };
         
         /* @ngInject */
@@ -21,11 +21,10 @@
             vm.getTimestamp = getTimestamp
             
             function getTimestamp() {
-                return moment.utc(vm.comment.date).fromNow();
+                // New date moment performance hack
+                return moment.utc(new Date(vm.comment.date)).fromNow();
             }
         }
-
-        
         return directive;
     }
 })();

@@ -1,6 +1,6 @@
 {
   "name": "node-pong",
-  "description": "Multiplayer Pong Game",
+  "description": "Mini-games platform",
   "main": "",
   "authors": [
     "Randy Mikkelsaar"
@@ -33,16 +33,21 @@
     "angular-jwt": "^0.0.9",
     "auth0-lock": "^8.2.2",
     "angular-sanitize": "^1.4.9",
-    "bootstrap-material-design": "^0.5.7",
     "angular-socket-io": "^0.7.0",
     "lodash": "^4.2.1",
     "q": "#1.0.1",
-    "angular-resource": "^1.5.0"
+    "angular-resource": "^1.5.0",
+    "font-awesome-animation": "^0.0.8",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#^1.7.0",
+    "sweetalert": "^1.1.3",
+    "angular-spinkit": "^0.3.3",
+    "ngInfiniteScroll": "^1.2.2"
   },
   "overrides": {
     "bootstrap": {
       "main": [
-        "dist/css/bootstrap.css"
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
       ]
     },
     "font-awesome": {

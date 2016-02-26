@@ -16,7 +16,7 @@
                 .catch(fail);
                 
             function success(response) {
-                return response.data;   
+                return response.data;
             }            
             function fail(e) {
                 throw new Error(e);

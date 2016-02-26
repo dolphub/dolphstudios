@@ -2,8 +2,10 @@
     <div class="card">
         <h2>Home Page</h2>
         <h4>Can see other people's recent activity and some statistics</h4>
-        <button class="btn btn-primary btn-raised" ng-click="vm.callApi()">Call API</button> <br />                        
-    </div>   
+        <button class="btn btn-main btn-raised" ng-click="vm.callApi()">Call API</button>
+    </div>    
+    <div class="card container-fluid">
+        <comment-section-card cs-title="Recent Posts" class="col-lg-6 col-md-12 col-sm-12"></comment-section-card>    
+    </div>
     
-    <comment-section-card cs-title="Recent Posts"></comment-section-card>
 </section>

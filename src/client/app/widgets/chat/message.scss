@@ -1,33 +1,13 @@
-@mixin display-flex() {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: flex;
-    list-style: none;
-  
-  -ms-box-orient: horizontal;
-}
-
-@mixin flex-direction($dir) {
-    -webkit-flex-direction: $dir;
-    flex-direction: $dir;
-}
+@import 'base/variables';
+@import 'base/mixins';
 
 $screen-tablet: 768px;
 .message {
     
-    @keyframes fadein {
-        from { opacity: 0; }
-        to { opacity: 100; }
-    }
-    
-    animation: fadein .3s forwards;
-    
     @include display-flex();
     @include flex-direction(row);
     padding: 5px 5px 0px 5px;
+    color: $primary-text-color;
     
     .user {
         text-transform: capitalize;
@@ -38,13 +18,17 @@ $screen-tablet: 768px;
     }    
         
     .post {
-        padding-left: 15px;
+        padding-left: 4px;
         
         p {
             word-break: break-word;
             font-weight: 400;
         }
-    } 
+    }
+
+    .timestamp {
+        font-size: 75%;
+    }
     
     @media (max-width: $screen-tablet) {
         img {

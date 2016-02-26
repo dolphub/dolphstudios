@@ -1,0 +1,147 @@
+@import "base/variables";
+@import "base/mixins";
+@import url(https://fonts.googleapis.com/css?family=Roboto:900);
+
+
+/** Apply gloabl font theme */
+* {
+    font-family: Roboto;
+}
+
+html, body {
+    // overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+/** Anchor Animations */
+a:not(.avatar) {
+    text-decoration: none;
+    @include transition(all .2s);
+    &:hover {
+        // font-size: 130%;
+    };
+}
+
+.ds-input {
+    .input {
+        color: $navcolor !important;
+    }
+}
+/** End Anchor Animation */
+
+
+/** Button Styles */
+.btn-main {
+    @include btn-gradient;
+    box-shadow: 0 0 10px rgba(5,199,247,0.5), inset 0 0 1px 1px #05c7f7;
+    color: white;
+    &:hover, &:focus {
+        color: white;
+    }
+    &:active {
+        @include btn-gradient;
+    }
+}
+
+.card {
+    margin-top: 15px;
+    background-color: $secondary-background;
+    padding: 15px;
+    width: 100%;
+    color: $primary-text-color;
+    border: 3px solid $action-primary;
+
+    textarea {
+        color: black;
+    }
+
+    a {
+        color: $action-primary;
+    }
+}
+
+#main-section {
+    @include transition(all .5s $transition-type);
+}
+
+.main-content {    
+    margin-top: 60px;
+}
+
+.authenticated-shell {
+    background-image: $primary-background-image;
+    min-height: calc(100vh);
+    width: 100%;
+    // background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.sidebar-active {
+    margin-left: 195px;
+}
+
+.chat-active {
+    margin-right: $sidebar-desktop-width;
+}
+@media (max-width: $screen-tablet) {
+    .chat-active {
+        margin-right: $sidebar-width;
+    }
+}
+
+#overlay {
+    position: absolute;
+    background-color: transparent;
+    height: calc(100vh);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    
+}
+
+.overlay-show {
+    right: $sidebar-desktop-width;
+}
+
+@media (max-width: $screen-tablet) {
+    .overlay-show {
+        right: $sidebar-width;
+    }
+}
+
+// Spinner Style
+.wave-spinner,
+.double-bounce-spinner,
+.chasing-dots-spinner,
+.spinning-dots,
+.three-bounce-spinner,
+.cube-grid-spinner
+ {
+    margin-top: 30px;
+    * {
+        @include btn-gradient();
+    }
+}
+
+.three-dots-row-spinner {
+    margin-top: 30px;
+    @include spinning-gradient();
+    // background-color: $action-primary !important;
+}
+
+.wandering-cubes-spinner {
+    margin-top: 30px;
+    &:before, &:after {
+        @include spinning-gradient();
+    }
+}
+
+.spinning-dots-spinner {
+    margin-top: 30px;
+    * {
+        .circle1, .circle2, .circle3, .circle4 {
+            @include spinning-gradient();   
+        }
+    }
+}

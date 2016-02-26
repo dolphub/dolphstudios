@@ -33,6 +33,10 @@
             connect: connect,
             disconnect: disconnect,
             on: function(evnt, callback) {
+                if(socket._callbacks.hasOwnProperty('$' + evnt)) {
+                    console.warn('Attempting to bind event that already exists...', evnt);
+                    return;
+                }
                 socket.on(evnt, function() {
                     var args = arguments;
                     $rootScope.$apply(function() {
@@ -40,7 +44,7 @@
                     });
                 });
             },
-            emit: function(evnt, data, callback){
+            emit: function(evnt, data, callback) {
                 socket.emit(evnt, data, function() {
                     var args = arguments;
                     $rootScope.$apply(function() {
@@ -54,11 +58,5 @@
                 return socket ? socket.connected : false;
             }
         }
-
-
-        // var myIo = 
-        // var mySocket = socketFactory({ ioSocket: myIo });
-        
-        // return mySocket;
     }
 })();

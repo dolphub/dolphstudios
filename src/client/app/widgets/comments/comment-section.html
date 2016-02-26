@@ -1,0 +1,12 @@
+<div class="comment-section">
+    <h3>{{ vm.title }}</h3>    
+    <textarea resizable="" ng-model="vm.messageText">
+    </textarea>
+    <button class="btn btn-main" ng-click="vm.postMessage()">Post Message</button>
+    <ds-input ds-placeholder="Filter posts..." ds-model="vm.postsFilter" ></ds-input>
+    <div infinite-scroll='vm.loadMore()'
+        infinite-scroll-immediate-check='false'>
+        <comment-card ng-repeat="item in vm.comments | filter:vm.postsFilter" data-comment="item"></comment-card>
+    </div>
+    <ds-spinner ds-promise="vm.promise"></ds-spinner>
+</div>

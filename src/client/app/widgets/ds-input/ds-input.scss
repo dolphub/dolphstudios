@@ -1,0 +1,35 @@
+@import 'base/variables';
+@import 'base/mixins';
+
+.ds-input {
+    position: relative;
+    .input {
+        @include transition(all .3s linear);
+        background-color: transparent;
+        color: #555;
+        // overrides
+        border: none !important;
+        border-bottom: 1px solid #CCC !important;
+        border-radius: 0px !important;
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            border-color: rgba(0,0,0,0) !important;
+        }
+
+        &:focus+.underline {
+            @include transform(scale(1));
+        }    
+    }
+
+    .underline {
+        position: absolute;
+        background-color: $action-primary;
+        display: inline-block;
+        width: 100% !important;
+        height: 2px;
+
+        @include transition(all 0.2s linear);
+        @include transform(scale(0, 1));
+    }
+}

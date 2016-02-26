@@ -1,0 +1,46 @@
+@import "base/variables";
+
+@mixin btn-gradient () {
+    background-image: linear-gradient(to bottom, $action-primary 10%, $action-secondary 90%);
+}
+
+@mixin spinning-gradient () {
+    background-image: linear-gradient(to bottom, $action-primary 10%, $action-secondary 90%);
+    // border: 1px solid $action-primary;   
+    width: 25px;
+    height: 25px;
+}
+
+@mixin transition($transition) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    transition: $transition;
+}
+
+@mixin transform($transform) {
+    -webkit-transform: $transform;
+    -moz-transform: $transform;
+    transform: $transform;
+}
+
+@mixin translate3d($x, $y, $z) {
+    -webkit-transform: translate3d($x, $y, $z);
+    transform: translate3d($x, $y, $z);
+}
+
+@mixin display-flex() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+    list-style: none;
+  
+  -ms-box-orient: horizontal;
+}
+
+@mixin flex-direction($dir) {
+    -webkit-flex-direction: $dir;
+    flex-direction: $dir;
+}

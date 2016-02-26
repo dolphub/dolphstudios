@@ -4,6 +4,6 @@
     angular.module('app', [
         'app.core',
         'app.widgets',
-        'app.components'        
+        'app.components'   
     ]);
 })();

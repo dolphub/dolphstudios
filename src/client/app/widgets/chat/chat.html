@@ -1,24 +1,30 @@
 <div class="ds-chatbar">
     <!-- Chat Bar -->
-    <aside id="chatbar" class="sidebar sidebar-fixed-right sidebar-default open" role="navigation">
+    <aside id="chatbar" class="sidebar sidebar-fixed-right sidebar-default" role="navigation">
         <!-- Sidebar header -->
         <div class="sidebar-title">
             <h3>{{ vm.title }} 
-                <span ng-if="!vm.isConnected()" class="chat-disconnected">Offline</span>
-                <button ng-if="vm.isConnected()" ng-click="vm.disconnect()" 
-                        class="btn btn-warning btn-disconnect btn-raised btn-sm">Exit</button>
+                <!-- <span ng-if="!vm.isConnected()" class="chat-disconnected">Offline</span> -->
             </h3>
+            <div class="dropdown">
+              <i class="fa fa-cogs dropdown-toggle chat-settings pull-right" data-toggle="dropdown"></i>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="javascript:void(0);"  ng-click="vm.toggleChatLock()">
+                    <span ng-if="!vm.isChatLocked">Lock Chat</span>
+                    <span ng-if="vm.isChatLocked">Unlock Chat</span>
+                </a></li>
+                <li><a href="javascript:void(0);" ng-if="vm.isConnected()" ng-click="vm.disconnect()">Exit Chat</a></li>
+              </ul>
+            </div>
         </div>
         
         <div class="chatarea">
-            <button ng-if="!vm.isConnected()" ng-click="vm.connect()" class="btn btn-primary btn-block btn-raised">Connect</button>
+            <button ng-if="!vm.isConnected()" ng-click="vm.connect()" class="btn btn-main btn-block btn-raised">Connect</button>
             <div ng-show="vm.isConnected()">
                 <message ng-repeat="msg in vm.messages" data="msg"></message>
             </div>
         </div>
-        
-        
-        <input type="text" ng-e class="form-control chatbox"  placeholder="Type here..."
-            ng-model="vm.textInput" ng-disabled="!vm.isConnected()" ng-enter="vm.sendMessage()">
+        <ds-input class="chatbox" ds-placeholder="Type here..." ds-enter="vm.sendMessage" ds-disabled="!vm.isConnected()"
+            ds-model="vm.textInput"></ds-input>
     </aside>
 </div>

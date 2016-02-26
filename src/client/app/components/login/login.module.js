@@ -1,5 +1,5 @@
 (function() {
-    angular.module('app.games', [
+    angular.module('app.login', [
         'app.core'
     ]);
 })();

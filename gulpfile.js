@@ -16,7 +16,7 @@ var port = process.env.PORT || config.defaultPort;
  * @return {Stream}
  */
 gulp.task('wiredep', function() {
-    console.log('Wiring the bower dependencies into the html');
+    console.log('Wiring the bower dependencies into the html...');
     
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions();
@@ -40,6 +40,10 @@ gulp.task('sass-watcher', function() {
     gulp.watch([config.sass], ['styles']);
 });
 
+gulp.task('client-watcher', function() {
+    gulp.watch([config.client + '**/*.js'], ['wiredep']);
+});
+
 gulp.task('vet', function() {
     return gulp
         .src(config.alljs)
@@ -57,9 +61,17 @@ gulp.task('styles', function() {
     return gulp
         .src(config.sass)
         .pipe($.flatten())
-        .pipe($.plumber())
         .pipe($.sass(config.sassConfig).on('error', $.sass.logError))
         .pipe($.concat('styles.css'))
+        .pipe($.plumber())
+        .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('fonts', function() {
+    return gulp
+        .src(config.customFonts)
+        .pipe($.flatten())
+        .pipe($.plumber())
         .pipe(gulp.dest(config.temp));
 });
 
@@ -76,8 +88,8 @@ gulp.task('clean-styles', function(done) {
     clean(files, done);
 });
 
-gulp.task('build-dev', ['styles', 'wiredep']);
-gulp.task('default', [ 'styles', 'wiredep', 'start', 'sass-watcher']); // jshint
+gulp.task('build-dev', ['styles', 'fonts', 'wiredep']);
+gulp.task('default', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
 
 function getNodeOptions(isDev) {
     return {

@@ -93,20 +93,10 @@
                         handlingStateChangeError = false;
                         var title = config.docTitle + ' ' + (toState.title || '');
                         $rootScope.title = title; // data bind to <title>
-                        $timeout(function() {
-                            $.material.init()
-                        }, 0, true);
+                        window.scroll(0, 0);
                     }
                 );
             }
         }
     }
 })();
-
-
-//     // Main Controller
-//     $scope.$on('$routeChangeSuccess', function(e, nextRoute){
-//         if ( nextRoute.$$route && angular.isDefined( nextRoute.$$route.pageTitle ) ) {
-//             $scope.pageTitle = nextRoute.$$route.pageTitle + ' | Auth0 Sample' ;
-//         }
-//     });

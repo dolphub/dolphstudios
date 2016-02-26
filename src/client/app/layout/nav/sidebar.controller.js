@@ -11,7 +11,8 @@
     function SidebarController (config, auth, store, $state, routerHelper, socket) {
          var vm = this;
          
-         vm.profile = store.get('profile');         
+         vm.profile = store.get('profile');     
+         vm.$state = $state;    
          vm.toggleState = toggleState;
          vm.logout = logout;
          
@@ -19,14 +20,14 @@
          getNavRoutes();
          
          function toggleState() {
-             vm.state = !vm.state;
+            vm.state = !vm.state;
          }
          
          function logout() {
-             store.remove('profile');
-             store.remove('token');
-             auth.signout();
-             $state.go('login');
+            auth.signout();
+            store.remove('profile');
+            store.remove('token');
+            $state.go('login');
          }
          
         function getNavRoutes() {

@@ -2,9 +2,9 @@
     angular.module('app.home')
     .controller('HomeController', HomeController);
     
-    HomeController.$inject = ['store', 'homeService'];
+    HomeController.$inject = ['store', 'homeService', '$rootScope'];
     /* @ngInject */
-    function HomeController(store, homeService) {
+    function HomeController(store, homeService, $rootScope) {
         var vm = this;
         var profile = store.get('profile');        
         // Methods
@@ -14,6 +14,9 @@
             homeService.getUser().then(function(res) {
                 console.log(res);
             });
-        } 
-    }    
+            // $rootScope.$emit('chat-msg');
+        }
+
+
+    }
 })();
