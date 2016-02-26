@@ -1,22 +1,21 @@
 <div ng-controller="ShellController as vm">
-    <!--UnAuthenticaatedView-->
-    <div ng-if="!vm.auth.isAuthenticated" 
-        ng-include="'app/layout/landing/landing.html'"></div>
-    <!--/UnAuthenticaatedView-->
-    
-    <!--AuthenticaatedView-->
-    <div ng-if="vm.auth.isAuthenticated">
+
+    <section class="authenticated-shell" ng-if="vm.auth.isAuthenticated">
         <header class="clearfix">
             <div ng-include="'app/layout/nav/topnav.html'"></div>
-            
+            <div ng-include="'app/layout/nav/sidebar.html'"></div>
         </header>
-        <div ng-include="'app/layout/nav/sidebar.html'"></div>
-        <chat></chat>
-        
+
+        <chat></chat>    
         <section id="main-section" class="main-content sidebar-active">
             <div class='container-fluid'>
                 <div ui-view class="shuffle-animation mainbar"></div>
             </div>
         </section>
-    </div>
+    </section>
+
+    <!-- Unauthenticated View -->
+    <div ng-if="!vm.auth.isAuthenticated" ui-view></div>
 </div>
+
+ 

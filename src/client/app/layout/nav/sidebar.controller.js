@@ -20,14 +20,14 @@
          getNavRoutes();
          
          function toggleState() {
-             vm.state = !vm.state;
+            vm.state = !vm.state;
          }
          
          function logout() {
-             store.remove('profile');
-             store.remove('token');
-             auth.signout();
-             $state.go('login');
+            auth.signout();
+            store.remove('profile');
+            store.remove('token');
+            $state.go('login');
          }
          
         function getNavRoutes() {

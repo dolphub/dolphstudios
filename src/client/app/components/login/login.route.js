@@ -12,17 +12,13 @@
     function getStates() {
         return [
             {
-                state: 'home',
+                state: 'login',
                 config: {
-                    url: '/home',
-                    templateUrl: 'app/components/home/home.html',
-                    controller: 'HomeController',
+                    url: '/login',
+                    templateUrl: 'app/components/login/login.html',
+                    controller: 'LoginController',
                     controllerAs: 'vm',
-                    title: 'Home',
-                    settings: {
-                        nav: 1,
-                        content: '<i class="fa fa-home"></i> Home'
-                    }
+                    title: 'Login'
                 }
             }
         ];

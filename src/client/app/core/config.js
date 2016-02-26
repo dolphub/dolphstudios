@@ -23,14 +23,6 @@
             poweredBy: 'Security Provided By OAuth2',
             loginTitle: 'Sign In Here'
         },
-        landing: {
-            header: {
-                background: 'background: url(/src/client/images/gamer-4-life.png) no-repeat center center;'
-            },
-            banner: {
-                background: 'background: url(/src/client/images/banner-bg.png) no-repeat center center;'
-            }
-        },
         appDesktopWidth: 768
     };
     core.value('config', config);

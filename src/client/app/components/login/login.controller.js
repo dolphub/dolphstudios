@@ -2,12 +2,12 @@
     'use strict';
 
     angular
-        .module('app.layout')
-        .controller('LandingController', LandingController);
+        .module('app.login')
+        .controller('LoginController', LoginController);
 
-    LandingController.$inject = ['config', 'auth', '$location', 'store'];
+    LoginController.$inject = ['config', 'auth', '$location', 'store'];
     /* @ngInject */
-    function LandingController(config, auth, $location, store) {
+    function LoginController(config, auth, $location, store) {
         var vm = this;
         vm.config = config;
         vm.login = authSignin;

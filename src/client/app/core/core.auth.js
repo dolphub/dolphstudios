@@ -19,11 +19,12 @@
             return store.get('token');
         };
         $httpProvider.interceptors.push('jwtInterceptor');
+        $httpProvider.interceptors.push('apiInterceptor');
     }
     
     /* @ngInject */
-    appRun.$inject = ['$rootScope', 'auth', 'store', 'jwtHelper', '$location'];
-    function appRun($rootScope, auth, store, jwtHelper, $location) {
+    appRun.$inject = ['$rootScope', 'logger', 'auth', 'store', 'jwtHelper', '$location'];
+    function appRun($rootScope, logger, auth, store, jwtHelper, $location) {
         $rootScope.$on('$locationChangeStart', function() {
             if (!auth.isAuthenticated) {
                 var token = store.get('token');
@@ -34,5 +35,24 @@
                 }
             }
         });
+
+        $rootScope.$on('unauthorized', unauthorized);
+        function unauthorized() {
+            if (!auth.isAuthenticated) { // Disregard if we are already unauthenticated
+                return;
+            }
+
+            logger.error('It appears your token is invalid.  Please log in.', null, 'Unauthorized');
+            store.remove('profile');
+            store.remove('token');
+            auth.signout();
+            $location.path('/');
+        };
+    }
+
+    /* @ngInject */
+    interceptor.$inject = [];
+    function interceptor() {
+
     }
 })();

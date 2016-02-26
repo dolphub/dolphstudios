@@ -16,14 +16,14 @@
         };  
         return directive;      
         
-        controller.$inject = ['store', '$http', 'Comments', '$timeout'];
+        controller.$inject = ['store', '$http', 'Comments', '$timeout', 'auth'];
         /* @ngInject */
-        function controller(store, $http, Comments, $timeout) {
+        function controller(store, $http, Comments, $timeout, auth) {
             var vm = this;
             var profile = store.get('profile');
             vm.promise = null;
             vm.comments = [];
-            vm.maxLoadComments = 8;
+            vm.maxLoadComments = 15;
             
             // Methods
             vm.loadMore = loadMore;
@@ -36,7 +36,7 @@
              */
             function loadMore() {
                 // If we have a promise pending, do not call another
-                if (vm.promise.$$state.status == 0) {
+                if (vm.promise.$$state.status == 0 || !auth.isAuthenticated) {
                     return;
                 }
 
