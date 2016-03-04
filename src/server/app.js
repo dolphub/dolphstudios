@@ -8,7 +8,6 @@ var config = require('./utils/config');
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var httpsServer = require('https').createServer(config.httpsOptions, app);
 var morgan = require('morgan');
 var logger = require('winston');
 var resolve = require('path').resolve;

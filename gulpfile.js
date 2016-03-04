@@ -95,7 +95,7 @@ gulp.task('clean-styles', function(done) {
 
 gulp.task('build-dev', ['styles', 'fonts', 'wiredep']);
 gulp.task('default', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
-gulp.task('prod', [ 'styles', 'wiredep', 'startProduction', 'sass-watcher', 'client-watcher']); // jshint
+gulp.task('prod', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
 
 function getNodeOptions(isDev) {
     return {
