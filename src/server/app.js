@@ -2,15 +2,13 @@
 /*jshint node:true*/
 'use strict';
 
-if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'development';
-}
-require('dotenv').config()
+require('dotenv').config();
 
-var port = process.env.PORT || 3000;
+var config = require('./utils/config');
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
+var httpsServer = require('https').createServer(config.httpsOptions, app);
 var morgan = require('morgan');
 var logger = require('winston');
 var resolve = require('path').resolve;
@@ -24,7 +22,7 @@ var chat = require('./modules/chat/chat-server');
 var mongoose = require('./utils/mongoose');
 
 
-if (process.env.NODE_ENV = 'development') {
+if (process.env.NODE_ENV == 'development') {
     logger.level = 'debug';    
 }
 
@@ -52,13 +50,29 @@ app.use('/app/*', function(req, res, next) {
     four0four.send404(req, res);
 });
 // Any deep link calls should return index.html
-app.use('/*', express.static('./src/client/index.html')); 
+app.use('/*', express.static('./src/client/index.html'));
 app.use(morgan('combined'));
 
-server.listen(port, function() {
-    logger.info('Express server listening on port ' + port);
-    logger.info('env = ' + app.get('env'));
-});
+
+console.log('<<<<<<<<< app.js::', process.env.NODE_ENV, process.env.PORT);
+if (process.env.NODE_ENV == "development") {
+	server.listen(process.env.PORT, function() {
+	    logger.info('Express server listening on port ' + process.env.PORT);
+	    logger.info('env = ' + app.get('env'));
+	});
+}
+
+if (process.env.NODE_ENV == "production") {
+	try {
+		httpsServer.listen(process.env.PORT, function() {
+			logger.info('Express server listening securely on port ' + process.env.PORT);
+			logger.info('env = ' + app.get('env'));
+		});	
+	} catch (e) {
+		console.log('Error:::', e);
+	}
+	
+}
 
 // Starts the chat server
 chat.start(server);

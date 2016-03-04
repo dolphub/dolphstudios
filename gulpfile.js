@@ -36,6 +36,11 @@ gulp.task('start', function() {
         .on('restart', ['wiredep', 'styles']);
 });
 
+gulp.task('startProduction', function() {
+    $.nodemon(getNodeOptions(false))
+        .on('restart', ['wiredep', 'styles']);
+});
+
 gulp.task('sass-watcher', function() {
     gulp.watch([config.sass], ['styles']);
 });
@@ -90,13 +95,14 @@ gulp.task('clean-styles', function(done) {
 
 gulp.task('build-dev', ['styles', 'fonts', 'wiredep']);
 gulp.task('default', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
+gulp.task('prod', [ 'styles', 'wiredep', 'startProduction', 'sass-watcher', 'client-watcher']); // jshint
 
 function getNodeOptions(isDev) {
     return {
         script: config.nodeServer,
-        env: {
-            'PORT': process.env.PORT || port,
-            'NODE_ENV': isDev ? 'dev' : 'build'
+        env:{
+            'PORT': process.env.PORT || isDev ? config.defaultPort : config.httpsPort,
+            'NODE_ENV': isDev ? 'development' : 'production'
         },
         watch: [config.server]
     };

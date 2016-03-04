@@ -1,4 +1,5 @@
 'use strict';
+var fs = require('fs');
 
 module.exports = {
     db: {
@@ -9,5 +10,9 @@ module.exports = {
         },
         // Enable mongoose debug mode
         debug: process.env.MONGODB_DEBUG || false
+    },
+    httpsOptions: {
+    	privateKey: fs.readFileSync("/etc/letsencrypt/live/play.dolphstudios.com/privkey.pem", "utf-8"),
+    	certificate: fs.readFileSync("/etc/letsencrypt/live/play.dolphstudios.com/cert.pem", "utf-8")
     }
 };
