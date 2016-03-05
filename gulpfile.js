@@ -7,6 +7,7 @@ var glob = require('glob');
 var gulp = require('gulp');
 var path = require('path');
 var _ = require('lodash');
+var cleanCSS = require('gulp-clean-css');
 var $ = require('gulp-load-plugins')({lazy: true});
 
 var port = process.env.PORT || config.defaultPort;
@@ -72,6 +73,22 @@ gulp.task('styles', function() {
         .pipe(gulp.dest(config.temp));
 });
 
+/**
+ * Compile less to css
+ * @return {Stream}
+ */
+gulp.task('styles-prod', function() {
+    console.log('Compiling SCSS --> CSS Minified'); 
+    return gulp
+        .src(config.sass)
+        .pipe($.flatten())
+        .pipe($.sass(config.sassConfigProd))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe($.concat('styles.css'))
+        .pipe($.plumber())
+        .pipe(gulp.dest(config.temp));
+});
+
 gulp.task('fonts', function() {
     return gulp
         .src(config.customFonts)
@@ -95,7 +112,7 @@ gulp.task('clean-styles', function(done) {
 
 gulp.task('build-dev', ['styles', 'fonts', 'wiredep']);
 gulp.task('default', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
-gulp.task('prod', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
+gulp.task('prod', [ 'styles-prod', 'wiredep', 'start']); // jshint
 
 function getNodeOptions(isDev) {
     return {

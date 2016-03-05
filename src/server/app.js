@@ -52,8 +52,6 @@ app.use('/app/*', function(req, res, next) {
 app.use('/*', express.static('./src/client/index.html'));
 app.use(morgan('combined'));
 
-
-console.log('<<<<<<<<< app.js::', process.env.NODE_ENV, process.env.PORT);
 if (process.env.NODE_ENV == "development") {
 	server.listen(process.env.PORT, function() {
 	    logger.info('Express server listening on port ' + process.env.PORT);
