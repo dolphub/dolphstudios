@@ -39,9 +39,9 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="chat_users">
                         <ul class="list-group">
-                            <h4><span class="usercount">Online Users: {{ vm.users.length }}</span></h4>
+                            <h4><span class="usercount">Users: {{ vm.users.length }}</span></h4>
                             <li ng-repeat="user in vm.users" ng-click="vm.userClick(user)" class="list-group-item user-block">
-                                <img src="{{ user.picture }}" width="35" height="35">                                
+                                <img src="{{ user.picture }}" width="35" height="35">                   
                                 <span class="username">{{ user.name || user.nickname }}</span>
                             </li>
                         </ul>

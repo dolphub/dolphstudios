@@ -88,13 +88,14 @@
             }
 
             function setUsers(users) {
-                var id = store.get('profile').user_id;
-                users.some(function(user, index, object) {
-                    if (user.user_id == id) {
-                        object.splice(index, 1);
-                        return;
-                    }
-                });
+                // TODO: Figure out what to do with self as an online user
+                // var id = store.get('profile').user_id;
+                // users.some(function(user, index, object) {
+                //     if (user.user_id == id) {
+                //         object.splice(index, 1);
+                //         return;
+                //     }
+                // });
                 vm.users = users;
             }
             
@@ -119,7 +120,6 @@
                 if (store.get('profile').user_id == user.user_id) {
                     return;
                 }
-
                 logger.info('[TEST] Messaging ' + (user.name || user.nickname));
             };
 
