@@ -20,9 +20,36 @@
         
         <div class="chatarea">
             <button ng-if="!vm.isConnected()" ng-click="vm.connect()" class="btn btn-main btn-block btn-raised">Connect</button>
-            <div ng-show="vm.isConnected()">
-                <message ng-repeat="msg in vm.messages" data="msg"></message>
+
+            <div ng-show="vm.isConnected()" role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#chat_global" aria-controls="chat_global" role="tab" data-toggle="tab">Global</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#chat_users" aria-controls="chat_users" role="tab" data-toggle="tab">Users</a>
+                    </li>                    
+                </ul>
+            
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="chat_global">
+                        <message ng-repeat="msg in vm.messages" data="msg"></message>                       
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="chat_users">
+                        <ul class="list-group">
+                            <h4><span class="usercount">Online Users: {{ vm.users.length }}</span></h4>
+                            <li ng-repeat="user in vm.users" ng-click="vm.userClick(user)" class="list-group-item user-block">
+                                <img src="{{ user.picture }}" width="35" height="35">                                
+                                <span class="username">{{ user.name || user.nickname }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+
+            
         </div>
         <ds-input class="chatbox" ds-placeholder="Type here..." ds-enter="vm.sendMessage" ds-disabled="!vm.isConnected()"
             ds-model="vm.textInput"></ds-input>

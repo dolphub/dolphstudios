@@ -80,6 +80,23 @@
             }
         }
     }
+
+    .user-block {
+        background-color: $navcolor;
+        color: $action-primary;
+        cursor: pointer;
+
+        img {
+            border-radius: 50%;
+        }    
+        .username {
+            padding-left: 0.4em;
+        }
+    }
+
+    .usercount {
+        color: $navcolor !important;
+    }
     
 
     // Sidebar design template
