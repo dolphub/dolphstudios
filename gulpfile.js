@@ -7,6 +7,7 @@ var glob = require('glob');
 var gulp = require('gulp');
 var path = require('path');
 var _ = require('lodash');
+var cleanCSS = require('gulp-clean-css');
 var $ = require('gulp-load-plugins')({lazy: true});
 
 var port = process.env.PORT || config.defaultPort;
@@ -33,6 +34,11 @@ gulp.task('wiredep', function() {
 
 gulp.task('start', function() {
 	$.nodemon(getNodeOptions(true))
+        .on('restart', ['wiredep', 'styles']);
+});
+
+gulp.task('startProduction', function() {
+    $.nodemon(getNodeOptions(false))
         .on('restart', ['wiredep', 'styles']);
 });
 
@@ -67,12 +73,41 @@ gulp.task('styles', function() {
         .pipe(gulp.dest(config.temp));
 });
 
+/**
+ * Compile less to css
+ * @return {Stream}
+ */
+gulp.task('styles-prod', function() {
+    console.log('Compiling SCSS --> CSS Minified'); 
+    return gulp
+        .src(config.sass)
+        .pipe($.flatten())
+        .pipe($.sass(config.sassConfigProd))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe($.concat('styles.css'))
+        .pipe($.plumber())
+        .pipe(gulp.dest(config.temp));
+});
+
 gulp.task('fonts', function() {
     return gulp
         .src(config.customFonts)
         .pipe($.flatten())
         .pipe($.plumber())
         .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('js-minify', function() {
+    return gulp
+        .src(config.js)
+        .pipe($.uglify())
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('clean-prod', function() {
+    return gulp
+        .src('dist')
+        .pipe($.clean());
 });
 
 
@@ -90,13 +125,15 @@ gulp.task('clean-styles', function(done) {
 
 gulp.task('build-dev', ['styles', 'fonts', 'wiredep']);
 gulp.task('default', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
+gulp.task('clean', ['clean-styles', 'clean-prod']);
+gulp.task('prod', [ 'clean', 'styles-prod', 'js-minify', 'wiredep', 'start']); // jshint
 
 function getNodeOptions(isDev) {
     return {
         script: config.nodeServer,
-        env: {
-            'PORT': process.env.PORT || port,
-            'NODE_ENV': isDev ? 'dev' : 'build'
+        env:{
+            'PORT': process.env.PORT || isDev ? config.defaultPort : config.httpsPort,
+            'NODE_ENV': isDev ? 'development' : 'production'
         },
         watch: [config.server]
     };
