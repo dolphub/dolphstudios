@@ -1,0 +1,7 @@
+<section ng-controller="chatGlobalController as globalVm" ng-loaded="{{ globalVm.partialLoaded(vm) }}">
+	<div class="chatarea">
+        <message ng-repeat="msg in vm.globalMessages" data="msg"></message>
+    </div>
+    <ds-input class="chatbox" ds-placeholder="Type in global chat..." ds-enter="vm.sendMessage" ds-disabled="!vm.isConnected()"
+        ds-model="vm.textInput"></ds-input>
+</section>

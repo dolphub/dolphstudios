@@ -20,7 +20,8 @@
             var vm = this;
             vm.title = "Chat";
             vm.textInput = "";
-            vm.messages = [];
+            vm.globalMessages = [];
+            vm.pMessages = [];
             vm.users = [];
             vm.isChatLocked = false;
 
@@ -68,7 +69,7 @@
                         
             // Connection Successful
             function onConnectionSuccess(sock) {
-                vm.messages.push({
+                vm.globalMessages.push({
                     user: sock.user.name || sock.user.nickname,
                     message: "Has Connected!",
                     info: true,
@@ -78,7 +79,7 @@
             };
 
             function onDisconnection(sock) {
-                vm.messages.push({
+                vm.globalMessages.push({
                     user: sock.user.name || sock.user.nickname,
                     message: "Has Disconnected...",
                     info: true,
@@ -89,19 +90,23 @@
 
             function setUsers(users) {
                 // TODO: Figure out what to do with self as an online user
-                // var id = store.get('profile').user_id;
-                // users.some(function(user, index, object) {
-                //     if (user.user_id == id) {
-                //         object.splice(index, 1);
-                //         return;
-                //     }
-                // });
+                var id = store.get('profile').user_id;
+                var accounted = false;
+                users.forEach(function(user, index, object) {
+                    if (user.user_id == id) {
+                        if (!accounted) {
+                            accounted = true;
+                        } else { // If we have an accounted user already in the list do not add a duplicate
+                            object.splice(index, 1);
+                        }                        
+                    }
+                });
                 vm.users = users;
             }
             
             // Recieved Chat Message
             function onChatMessage(msg) {
-                vm.messages.push(msg);
+                vm.globalMessages.push(msg);
                 scrollToMessage();
                 $rootScope.$emit('chatMessage');
                 if (!store.get('chat::open') && (!store.get('profile').name || store.get('profile').nickname
@@ -110,12 +115,15 @@
                 }
             };
 
+            // Broadcast the chat lock functionality
             function toggleChatLock() {
                 vm.isChatLocked = !vm.isChatLocked;
                 store.set('chat::lock', vm.isChatLocked);
                 $rootScope.$emit('chat::lock', vm.isChatLocked);
             }
 
+            // Opens direct channel to user
+            // TODO: Open direct channel to user for private conversations
             function userClick(user) {
                 if (store.get('profile').user_id == user.user_id) {
                     return;
@@ -130,6 +138,7 @@
                 }, 1000);
             }
             
+            // HACK:: Manually trigger cycle digest to update message time stamps
             // Poke model every 30 seconds for moment timestamp updates
             vm.updatePoll = false;
             $interval(function() {

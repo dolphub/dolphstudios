@@ -1,0 +1,13 @@
+<section ng-controller="chatUsersController as userVm" ng-loaded="{{ userVm.partialLoaded(vm) }}">
+	<h4><span class="usercount">Online Users: {{ vm.users.length }}</span></h4>
+	<ds-input ds-placeholder="Filter users..." ds-model="vm.userFilter"></ds-input>
+
+	<div style="padding-top: 5px;" class="chatarea">
+	    <ul class="list-group">
+	        <li ng-repeat="user in vm.users | filter:vm.userFilter" ng-click="vm.userClick(user)" class="list-group-item user-block">
+	            <img src="{{ user.picture }}" width="35" height="35">
+	            <span class="username">{{ user.name || user.nickname }}</span>
+	        </li>
+	    </ul>
+	</div>	
+</section>
