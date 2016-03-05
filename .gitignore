@@ -4,3 +4,4 @@ bower_components
 *.log
 .env
 .tmp
+dist

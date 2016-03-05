@@ -97,6 +97,19 @@ gulp.task('fonts', function() {
         .pipe(gulp.dest(config.temp));
 });
 
+gulp.task('js-minify', function() {
+    return gulp
+        .src(config.js)
+        .pipe($.uglify())
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('clean-prod', function() {
+    return gulp
+        .src('dist')
+        .pipe($.clean());
+});
+
 
 /**
  * Remove all styles from the build and temp folders
@@ -112,7 +125,8 @@ gulp.task('clean-styles', function(done) {
 
 gulp.task('build-dev', ['styles', 'fonts', 'wiredep']);
 gulp.task('default', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
-gulp.task('prod', [ 'styles-prod', 'wiredep', 'start']); // jshint
+gulp.task('clean', ['clean-styles', 'clean-prod']);
+gulp.task('prod', [ 'clean', 'styles-prod', 'js-minify', 'wiredep', 'start']); // jshint
 
 function getNodeOptions(isDev) {
     return {
