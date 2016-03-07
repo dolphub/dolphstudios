@@ -25,7 +25,8 @@
         }
     }
 
-    
+    color: $navcolor;
+
     .chatbox {
         position: absolute;
         width: 100%;
@@ -96,6 +97,10 @@
 
     .usercount {
         color: $navcolor !important;
+    }
+
+    .chat-tabs {
+        cursor: pointer;
     }
     
 

@@ -18,20 +18,23 @@
         </div>
 
 
-
-        <three-bounce-spinner ng-if="!vm.isConnected()"></three-bounce-spinner>
+        <div ng-if="!vm.isConnected()">
+            <h4>Connecting...</h4>
+            <three-bounce-spinner ></three-bounce-spinner>    
+        </div>
+        
 
         <div ng-show="vm.isConnected()">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#chat_global" aria-controls="chat_global" role="tab" data-toggle="tab">Global</a>
+                    <a data-target="#chat_global" aria-controls="chat_global" role="tab" data-toggle="tab" class="chat-tabs">Global</a>
                 </li>
                 <li role="presentation">
-                    <a href="#chat_users" aria-controls="chat_users" role="tab" data-toggle="tab">Users</a>
+                    <a ng-click="vm.userTabClick()" data-target="#chat_users" aria-controls="chat_users" role="tab" data-toggle="tab" class="chat-tabs">Users</a>
                 </li>
                 <li role="presentation">
-                    <a href="#chat_messages" aria-controls="chat_messages" role="tab" data-toggle="tab">Messages</a>
+                    <a data-target="#chat_messages" aria-controls="chat_messages" role="tab" data-toggle="tab" class="chat-tabs">Messages</a>
                 </li>
             </ul>
 

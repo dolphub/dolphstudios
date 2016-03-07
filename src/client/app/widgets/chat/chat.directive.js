@@ -25,6 +25,7 @@
 
             vm.isConnected = isConnected;
             vm.toggleChatLock = toggleChatLock;
+            vm.userTabClick = userTabClick;
             
 
             socket.on('chat::connection:success', onConnectionSuccess);
@@ -43,6 +44,10 @@
                 vm.isChatLocked = !vm.isChatLocked;
                 store.set('chat::lock', vm.isChatLocked);
                 $rootScope.$emit('chat::lock', vm.isChatLocked);
+            }
+
+            function userTabClick() {
+                $rootScope.$emit('chat::users:view');
             }
 
             function onConnectionSuccess(sock) {

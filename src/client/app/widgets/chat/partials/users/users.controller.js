@@ -2,9 +2,9 @@
 	angular.module('app.widgets')
 	.controller('chatUsersController', chatUsersController);
 
-	chatUsersController.$inject = ['$rootScope', 'store', 'logger'];
+	chatUsersController.$inject = ['$rootScope', 'store', 'logger', 'Chat'];
 	/* @ngInject */
-	function chatUsersController($rootScope, store, logger) {
+	function chatUsersController($rootScope, store, logger, Chat) {
 		var vm = this;
 		vm.users = [];
 
@@ -12,6 +12,7 @@
 		vm.userClick = userClick;
 
 		$rootScope.$on('chat::users:update', updateUsers);
+		$rootScope.$on('chat::users:view', getUsers);
 		/**
 		 * Gain access to parent controller directly from partial
 		 */
@@ -41,6 +42,13 @@
 				}
 			});
 			vm.users = users;			
+		}
+
+		function getUsers(evnt) {
+			Chat.query().$promise.then(function(users) {
+				updateUsers(null, users);	
+			});
+			
 		}
 	}
 })();
