@@ -13,14 +13,14 @@
                     <span ng-if="!vm.isChatLocked">Lock Chat</span>
                     <span ng-if="vm.isChatLocked">Unlock Chat</span>
                 </a></li>
-                <li><a href="javascript:void(0);" ng-if="vm.isConnected()" ng-click="vm.disconnect()">Exit Chat</a></li>
               </ul>
             </div>
         </div>
 
 
 
-        <button ng-if="!vm.isConnected()" ng-click="vm.connect()" class="btn btn-main btn-block btn-raised">Connect</button>
+        <three-bounce-spinner ng-if="!vm.isConnected()"></three-bounce-spinner>
+
         <div ng-show="vm.isConnected()">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">

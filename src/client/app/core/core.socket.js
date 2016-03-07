@@ -5,10 +5,8 @@
     socket.$inject = ['$rootScope', 'store', 'toastr'];
     function socket($rootScope, store, toastr) {
         var socket;
-        
+        connect();
         var socketFactory = {
-            connect: connect,
-            disconnect: disconnect,
             on: onHandle,
             emit: emitHandle,
             connected: connected

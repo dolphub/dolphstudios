@@ -36,7 +36,7 @@ function socketServer(server) {
  * @param {Object}  Socket Objet.
  */
 function configureSocket(socket) {
-    io.emit('chatconnection::success', { user: socket.decoded_token, users: getConnectedUsers() });
+    io.emit('chat::connection:success', { user: socket.decoded_token, users: getConnectedUsers() });
 
     configureSocketMessages(socket);
     configureSocketDisconnect(socket);
@@ -49,7 +49,7 @@ function configureSocket(socket) {
  * @param {Object} Socket object.
  */
 function configureSocketMessages(socket) {
-    socket.on('chat::message', onChatMessage);
+    socket.on('chat::global:message', onChatMessage);
     function onChatMessage(data) {
         var messageObj = {
             avatar: socket.decoded_token.picture,
@@ -57,7 +57,7 @@ function configureSocketMessages(socket) {
             message: data.msg,
             date: new Date(new Date().toISOString())
         };
-        io.emit('chat::message', messageObj);
+        io.emit('chat::global:message', messageObj);
         logger.debug('Message from: ', messageObj.user, ':', messageObj.message);
     };
 }
@@ -70,7 +70,7 @@ function configureSocketDisconnect(socket) {
     socket.on('disconnect', onDisconnect);
 
     function onDisconnect() {
-        io.emit('chat::disconnect', { user: socket.decoded_token, users: getConnectedUsers() });
+        io.emit('chat::connection:disconnect', { user: socket.decoded_token, users: getConnectedUsers() });
         logger.info((socket.decoded_token.name || socket.decoded_token.nickname), 'disconnected');
     };
 }
