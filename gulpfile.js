@@ -4,13 +4,35 @@ var args = require('yargs').argv;
 var config = require('./gulp.config')();
 var del = require('del');
 var glob = require('glob');
+var cleanCSS = require('gulp-clean-css');
+var bowerMain = require('bower-main');
+var merge2 = require('merge2');
 var gulp = require('gulp');
 var path = require('path');
 var _ = require('lodash');
 var cleanCSS = require('gulp-clean-css');
 var $ = require('gulp-load-plugins')({lazy: true});
 
-var port = process.env.PORT || config.defaultPort;
+var env = {
+    production: !!$.util.env.production
+};
+
+
+gulp.task('clean-temp', function(done) {
+    var files = [].concat(
+        config.temp + '**/*.css',
+        config.build + 'styles/**/*.css',
+        config.temp + '**/*.js'
+    );
+    clean(files, done);
+});
+
+
+gulp.task('clean-dist', function() {
+    return gulp
+        .src('dist')
+        .pipe($.clean());
+});
 
 /**
  * Wire-up the bower dependencies
@@ -27,34 +49,25 @@ gulp.task('wiredep', function() {
     
     return gulp
         .src(config.index)
-        .pipe(wiredep(options))
         .pipe(inject(js, '', config.jsOrder))
         .pipe(gulp.dest(config.client));
 });
 
-gulp.task('start', function() {
-	$.nodemon(getNodeOptions(true))
-        .on('restart', ['wiredep', 'styles']);
-});
-
-gulp.task('startProduction', function() {
-    $.nodemon(getNodeOptions(false))
-        .on('restart', ['wiredep', 'styles']);
-});
-
+/**
+ * Watchers
+ */
 gulp.task('sass-watcher', function() {
-    gulp.watch([config.sass], ['styles']);
+    if (!env.production) {
+        console.log('Starting Sass Watcher.');
+        gulp.watch([config.sass], ['styles']);
+    }
 });
 
 gulp.task('client-watcher', function() {
-    gulp.watch([config.client + '**/*.js'], ['wiredep']);
-});
-
-gulp.task('vet', function() {
-    return gulp
-        .src(config.alljs)
-        .pipe($.jshint())
-        .pipe($.jshint.reporter('jshint-stylish', {verbose: true}))
+    if (!env.production) {
+        console.log('Starting Client Watcher.');
+        gulp.watch([config.client + '**/*.js'], ['wiredep']);
+    }
 });
 
 /**
@@ -63,70 +76,59 @@ gulp.task('vet', function() {
  */
 gulp.task('styles', function() {
     console.log('Compiling SCSS --> CSS');
+    return gulp
+        .src(config.sass)
+        .pipe($.flatten())
+        .pipe($.sass(env.production ? config.sassConfigProd : config.sassConfig).on('error', $.sass.logError))
+        .pipe($.concat('styles.css'))
+        .pipe($.plumber())
+        .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('start', function() {
+    $.nodemon(env.production ? getNodeOptions(false) : getNodeOptions(true))
+        .on('restart', ['wiredep', 'styles']);
+});
+
+gulp.task('bower-js', function() {
+    var mainJs = bowerMain('js', 'min.js').minified;
+    var mainJsNotFound = bowerMain('js', 'min.js').minifiedNotFound;
+
+    return merge2(
+        gulp.src(mainJs),
+        gulp.src(mainJsNotFound)
+            .pipe($.concat('tmp.min.js'))
+            .pipe($.uglify())
+    )
+        .pipe($.concat('vendor-scripts.min.js'))
+        .pipe(gulp.dest(config.production.vendorJs));
+});
+
+gulp.task('bower-css', function() {
+    var mainCss = bowerMain('css', 'min.css').normal;
+
     
-    return gulp
-        .src(config.sass)
-        .pipe($.flatten())
-        .pipe($.sass(config.sassConfig).on('error', $.sass.logError))
-        .pipe($.concat('styles.css'))
-        .pipe($.plumber())
-        .pipe(gulp.dest(config.temp));
+    return gulp.src(mainCss)
+        // .pipe(cleanCSS())        
+        .pipe($.concat('vendor-styles.min.css'))                
+        .pipe(gulp.dest(config.production.vendorJs));
 });
 
-/**
- * Compile less to css
- * @return {Stream}
- */
-gulp.task('styles-prod', function() {
-    console.log('Compiling SCSS --> CSS Minified'); 
-    return gulp
-        .src(config.sass)
-        .pipe($.flatten())
-        .pipe($.sass(config.sassConfigProd))
-        .pipe(cleanCSS({compatibility: 'ie8'}))
-        .pipe($.concat('styles.css'))
-        .pipe($.plumber())
-        .pipe(gulp.dest(config.temp));
-});
-
-gulp.task('fonts', function() {
-    return gulp
-        .src(config.customFonts)
-        .pipe($.flatten())
-        .pipe($.plumber())
-        .pipe(gulp.dest(config.temp));
-});
-
-gulp.task('js-minify', function() {
-    return gulp
-        .src(config.js)
-        .pipe($.uglify())
-        .pipe(gulp.dest('dist'));
-});
-
-gulp.task('clean-prod', function() {
-    return gulp
-        .src('dist')
-        .pipe($.clean());
-});
+gulp.task('bower-min', ['bower-js', 'bower-css']);
 
 
-/**
- * Remove all styles from the build and temp folders
- * @param  {Function} done - callback when complete
- */
-gulp.task('clean-styles', function(done) {
-    var files = [].concat(
-        config.temp + '**/*.css',
-        config.build + 'styles/**/*.css'
-    );
-    clean(files, done);
-});
+gulp.task('clean', ['clean-temp', 'clean-dist']);
+if (env.production) { // jshint
+    gulp.task('build', ['styles', 'wiredep', 'bower-min']);
+    gulp.task('serve', ['start']);
+} else {
+    gulp.task('build', ['styles', 'wiredep', 'bower-min']);
+    gulp.task('serve', ['start', 'sass-watcher', 'client-watcher']);
+}
 
-gulp.task('build-dev', ['styles', 'fonts', 'wiredep']);
-gulp.task('default', [ 'styles', 'wiredep', 'start', 'sass-watcher', 'client-watcher']); // jshint
-gulp.task('clean', ['clean-styles', 'clean-prod']);
-gulp.task('prod', [ 'clean', 'styles-prod', 'js-minify', 'wiredep', 'start']); // jshint
+gulp.task('default', ['clean', 'build', 'serve']);
+
+
 
 function getNodeOptions(isDev) {
     return {
@@ -163,16 +165,6 @@ function bytediffFormatter(data) {
 }
 
 /**
- * Log an error message and emit the end of a task
- */
-//function errorLogger(error) {
-//    log('*** Start of Error ***');
-//    log(error);
-//    log('*** End of Error ***');
-//    this.emit('end');
-//}
-
-/**
  * Format a number as a percentage
  * @param  {Number} num       Number to format as a percent
  * @param  {Number} precision Precision of the decimal
@@ -203,23 +195,6 @@ function getHeader() {
 }
 
 /**
- * Log a message or series of messages using chalk's blue color.
- * Can pass in a string, object or array.
- */
-function log(msg) {
-    if (typeof(msg) === 'object') {
-        for (var item in msg) {
-            if (msg.hasOwnProperty(item)) {
-                $.util.log($.util.colors.blue(msg[item]));
-            }
-        }
-    } else {
-        $.util.log($.util.colors.blue(msg));
-    }
-}
-
-
-/**
  * Inject files in a sorted sequence at a specified inject label
  * @param   {Array} src   glob pattern for source files
  * @param   {String} label   The label name
@@ -227,7 +202,7 @@ function log(msg) {
  * @returns {Stream}   The stream
  */
 function inject(src, label, order) {
-    var options = {read: false};
+    var options = config.getInjectOptions();
     if (label) {
         options.name = 'inject:' + label;
     }

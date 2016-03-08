@@ -20,9 +20,9 @@ var chat = require('./modules/chat/chat-server');
 
 var mongoose = require('./utils/mongoose');
 
-
-if (process.env.NODE_ENV == 'development') {
-    logger.level = 'debug';    
+var isProduction = process.env.NODE_ENV == 'production';
+if (!isProduction) {
+    logger.level = 'debug';
 }
 
 mongoose.loadModels();
@@ -35,8 +35,18 @@ mongoose.connect(function(db) {
 var jwtCheck = require('./utils/middlewares/jwtCheck');
 var four0four = require('./utils/middlewares/404.js')();
 
-app.use(express.static('./src/client/'));
-app.use(express.static('./'));
+
+if (isProduction) {
+    app.use(express.static('./.tmp/'));
+    app.use(express.static('./dist/'));
+    app.use(express.static('./dist/lib/'));
+} else {
+    app.use(express.static('./.tmp/'));   
+    app.use(express.static('./src/client/'));
+    app.use(express.static('./bower_components/'));     
+}
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
     
@@ -48,28 +58,16 @@ utils.getGlobbedFiles(resolve(__dirname, './modules/**/*.routes.js')).forEach(fu
 app.use('/app/*', function(req, res, next) {
     four0four.send404(req, res);
 });
+
 // Any deep link calls should return index.html
 app.use('/*', express.static('./src/client/index.html'));
 app.use(morgan('combined'));
 
-if (process.env.NODE_ENV == "development") {
-	server.listen(process.env.PORT, function() {
-	    logger.info('Express server listening on port ' + process.env.PORT);
-	    logger.info('env = ' + app.get('env'));
-	});
-}
 
-if (process.env.NODE_ENV == "production") {
-	try {
-		httpsServer.listen(process.env.PORT, function() {
-			logger.info('Express server listening securely on port ' + process.env.PORT);
-			logger.info('env = ' + app.get('env'));
-		});	
-	} catch (e) {
-		console.log('Error:::', e);
-	}
-	
-}
+server.listen(process.env.PORT, function() {
+    logger.info('Express server listening on port ' + process.env.PORT);
+    logger.info('env = ' + app.get('env'));
+});
 
 // Starts the chat server
 chat.start(server);
