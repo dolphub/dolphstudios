@@ -41,7 +41,7 @@ if (isProduction) {
     app.use(express.static('./dist/'));
     app.use(express.static('./dist/lib/'));
 } else {
-    app.use(express.static('./.tmp/'));   
+    app.use(express.static('./.tmp/'));
     app.use(express.static('./src/client/'));
     app.use(express.static('./bower_components/'));     
 }

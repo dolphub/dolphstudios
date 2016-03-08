@@ -5,7 +5,6 @@ var config = require('./gulp.config')();
 var del = require('del');
 var glob = require('glob');
 var cleanCSS = require('gulp-clean-css');
-var bowerMain = require('bower-main');
 var merge2 = require('merge2');
 var gulp = require('gulp');
 var path = require('path');
@@ -49,6 +48,7 @@ gulp.task('wiredep', function() {
     
     return gulp
         .src(config.index)
+        .pipe(wiredep(options))
         .pipe(inject(js, '', config.jsOrder))
         .pipe(gulp.dest(config.client));
 });
@@ -85,44 +85,49 @@ gulp.task('styles', function() {
         .pipe(gulp.dest(config.temp));
 });
 
+// Fonts
+// gulp.task('fonts', function() {
+//     return gulp.src([config.bower.directory + 'font-awesome/fonts/fontawesome-webfont.*'])
+//             .pipe(gulp.dest(config.temp + 'fonts/'));
+// });
+
 gulp.task('start', function() {
     $.nodemon(env.production ? getNodeOptions(false) : getNodeOptions(true))
         .on('restart', ['wiredep', 'styles']);
 });
 
-gulp.task('bower-js', function() {
-    var mainJs = bowerMain('js', 'min.js').minified;
-    var mainJsNotFound = bowerMain('js', 'min.js').minifiedNotFound;
+// gulp.task('bower-js', function() {
+//     var mainJs = bowerMain('js', 'min.js').minified;
+//     var mainJsNotFound = bowerMain('js', 'min.js').minifiedNotFound;
 
-    return merge2(
-        gulp.src(mainJs),
-        gulp.src(mainJsNotFound)
-            .pipe($.concat('tmp.min.js'))
-            .pipe($.uglify())
-    )
-        .pipe($.concat('vendor-scripts.min.js'))
-        .pipe(gulp.dest(config.production.vendorJs));
-});
+//     return merge2(
+//         gulp.src(mainJs),
+//         gulp.src(mainJsNotFound)
+//             .pipe($.concat('tmp.min.js'))
+//             .pipe($.uglify())
+//     )
+//         .pipe($.concat('vendor-scripts.min.js'))
+//         .pipe(gulp.dest(config.production.vendorJs));
+// });
 
-gulp.task('bower-css', function() {
-    var mainCss = bowerMain('css', 'min.css').normal;
-
+// gulp.task('bower-css', function() {
+//     var mainCss = bowerMain('css', 'min.css').normal;
     
-    return gulp.src(mainCss)
-        // .pipe(cleanCSS())        
-        .pipe($.concat('vendor-styles.min.css'))                
-        .pipe(gulp.dest(config.production.vendorJs));
-});
+//     return gulp.src(mainCss)
+//         // .pipe(cleanCSS())        
+//         .pipe($.concat('vendor-styles.min.css'))                
+//         .pipe(gulp.dest(config.production.vendorJs));
+// });
 
-gulp.task('bower-min', ['bower-js', 'bower-css']);
+
 
 
 gulp.task('clean', ['clean-temp', 'clean-dist']);
 if (env.production) { // jshint
-    gulp.task('build', ['styles', 'wiredep', 'bower-min']);
+    gulp.task('build', ['styles', 'wiredep']);
     gulp.task('serve', ['start']);
 } else {
-    gulp.task('build', ['styles', 'wiredep', 'bower-min']);
+    gulp.task('build', ['styles', 'wiredep']);
     gulp.task('serve', ['start', 'sass-watcher', 'client-watcher']);
 }
 
