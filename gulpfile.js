@@ -96,20 +96,6 @@ gulp.task('start', function() {
         .on('restart', ['wiredep', 'styles']);
 });
 
-// gulp.task('bower-js', function() {
-//     var mainJs = bowerMain('js', 'min.js').minified;
-//     var mainJsNotFound = bowerMain('js', 'min.js').minifiedNotFound;
-
-//     return merge2(
-//         gulp.src(mainJs),
-//         gulp.src(mainJsNotFound)
-//             .pipe($.concat('tmp.min.js'))
-//             .pipe($.uglify())
-//     )
-//         .pipe($.concat('vendor-scripts.min.js'))
-//         .pipe(gulp.dest(config.production.vendorJs));
-// });
-
 // gulp.task('bower-css', function() {
 //     var mainCss = bowerMain('css', 'min.css').normal;
     

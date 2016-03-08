@@ -21,10 +21,9 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "^2.2.1",
-    "angular": "angularjs#^1.4.9",
     "font-awesome": "^4.5.0",
     "bootstrap": "^3.3.6",
+    "angular": "angularjs#^1.4.9",
     "auth0-angular": "^4.1.0",
     "angular-animate": "^1.4.9",
     "toastr": "^2.1.2",
@@ -47,14 +46,23 @@
   "overrides": {
     "bootstrap": {
       "main": [
-        "dist/css/bootstrap.css",
-        "dist/css/bootstrap-theme.css",
-        "dist/js/bootstrap.js"
+        "dist/css/bootstrap.min.css",
+        "dist/js/bootstrap.min.js"
       ]
     },
     "font-awesome": {
       "main": [
-        "css/font-awesome.css"
+        "css/font-awesome.min.css"
+      ]
+    },
+    "angular": {
+      "main": [
+        "angular.min.js"
+      ]
+    },
+    "auth0-lock": {
+      "main": [
+        "build/auth0-lock.min.js"
       ]
     }
   }
