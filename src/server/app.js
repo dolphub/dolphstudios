@@ -36,14 +36,12 @@ var jwtCheck = require('./utils/middlewares/jwtCheck');
 var four0four = require('./utils/middlewares/404.js')();
 
 
+app.use(express.static('./.tmp/'));
+app.use(express.static('./bower_components/'));  
 if (isProduction) {
-    app.use(express.static('./.tmp/'));
     app.use(express.static('./dist/'));
-    app.use(express.static('./dist/lib/'));
 } else {
-    app.use(express.static('./.tmp/'));
-    app.use(express.static('./src/client/'));
-    app.use(express.static('./bower_components/'));     
+    app.use(express.static('./src/client/'));    
 }
 
 
@@ -63,7 +61,7 @@ app.use('/app/*', function(req, res, next) {
 app.use('/*', express.static('./src/client/index.html'));
 app.use(morgan('combined'));
 
-
+console.log(process.env.PORT);
 server.listen(process.env.PORT, function() {
     logger.info('Express server listening on port ' + process.env.PORT);
     logger.info('env = ' + app.get('env'));
