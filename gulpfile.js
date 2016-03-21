@@ -56,7 +56,7 @@ gulp.task('build-dist-js', function() {
     return gulp
         .src(config.client + '**/*.js')
         .pipe(ngAnnotate())
-        .pipe($.uglify()) // Causes problems
+        .pipe($.uglify({mangle: false})) // Causes problems
         .pipe(gulp.dest(config.production.main));
 });
 

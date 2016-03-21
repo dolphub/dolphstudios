@@ -38,6 +38,8 @@ var four0four = require('./utils/middlewares/404.js')();
 
 app.use(express.static('./.tmp/'));
 app.use(express.static('./bower_components/'));  
+
+// Serve ui content
 if (isProduction) {
     app.use(express.static('./dist/'));
 } else {
