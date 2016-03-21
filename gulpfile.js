@@ -8,6 +8,7 @@ var merge2 = require('merge2');
 var gulp = require('gulp');
 var path = require('path');
 var _ = require('lodash');
+var fs = require('fs');
 var ngAnnotate = require('gulp-ng-annotate');
 var $ = require('gulp-load-plugins')({lazy: true});
 
@@ -17,6 +18,9 @@ var env = {
 
 
 gulp.task('clean-temp', function(done) {
+    if (fs.exists(config.production.main)) {
+        fs.rmdirSync(config.production.main);
+    }
     var files = [].concat(
         config.temp + '**/*.css',
         config.build + 'styles/**/*.css',
@@ -25,12 +29,6 @@ gulp.task('clean-temp', function(done) {
     clean(files, done);
 });
 
-
-gulp.task('clean-dist', function() {
-    return gulp
-        .src(config.production.main)
-        .pipe($.clean({force: true}));
-});
 
 /**
  * Wire-up the bower dependencies
@@ -113,7 +111,7 @@ gulp.task('start', function() {
         .on('restart', ['wiredep', 'styles']);
 });
 
-gulp.task('clean', ['clean-temp', 'clean-dist']);
+gulp.task('clean', ['clean-temp']);
 if (env.production) { // jshint
     gulp.task('build', ['styles', 'build-dist', 'wiredep']);
     gulp.task('serve', ['start']);
