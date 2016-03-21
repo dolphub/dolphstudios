@@ -13,18 +13,53 @@
                     <span ng-if="!vm.isChatLocked">Lock Chat</span>
                     <span ng-if="vm.isChatLocked">Unlock Chat</span>
                 </a></li>
-                <li><a href="javascript:void(0);" ng-if="vm.isConnected()" ng-click="vm.disconnect()">Exit Chat</a></li>
               </ul>
             </div>
         </div>
+
+
+        <div ng-if="!vm.isConnected()">
+            <h4>Connecting...</h4>
+            <three-bounce-spinner ></three-bounce-spinner>    
+        </div>
         
-        <div class="chatarea">
-            <button ng-if="!vm.isConnected()" ng-click="vm.connect()" class="btn btn-main btn-block btn-raised">Connect</button>
-            <div ng-show="vm.isConnected()">
-                <message ng-repeat="msg in vm.messages" data="msg"></message>
+
+        <div ng-show="vm.isConnected()">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a data-target="#chat_global" aria-controls="chat_global" role="tab" data-toggle="tab" class="chat-tabs">Global</a>
+                </li>
+                <li role="presentation">
+                    <a ng-click="vm.userTabClick()" data-target="#chat_users" aria-controls="chat_users" role="tab" data-toggle="tab" class="chat-tabs">Users</a>
+                </li>
+                <li role="presentation">
+                    <a data-target="#chat_messages" aria-controls="chat_messages" role="tab" data-toggle="tab" class="chat-tabs">Messages</a>
+                </li>
+            </ul>
+
+            <div ng-show="vm.isConnected()" role="tabpanel">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- GLOBAL CHAT -->
+                    <div role="tabpanel" class="tab-pane active" id="chat_global">
+                        <div ng-include="'app/widgets/chat/partials/global/global.html'"></div>
+                    </div>
+
+                    <!-- ONLINE USERS -->
+                    <div role="tabpanel" class="tab-pane" id="chat_users">
+                        <div ng-include="'app/widgets/chat/partials/users/users.html'"></div>
+                    </div>
+
+                    <!-- DIRECT MESSAGES -->
+                    <div role="tabpanel" class="tab-pane" id="chat_messages">
+                        <div ng-include="'app/widgets/chat/partials/messages/messages.html'"></div>
+                    </div>
+
+                </div>
             </div>
         </div>
-        <ds-input class="chatbox" ds-placeholder="Type here..." ds-enter="vm.sendMessage" ds-disabled="!vm.isConnected()"
-            ds-model="vm.textInput"></ds-input>
+
+
     </aside>
 </div>

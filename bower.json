@@ -41,18 +41,28 @@
     "angular-hotkeys": "chieffancypants/angular-hotkeys#^1.7.0",
     "sweetalert": "^1.1.3",
     "angular-spinkit": "^0.3.3",
-    "ngInfiniteScroll": "^1.2.2"
+    "ngInfiniteScroll": "^1.2.2" 
   },
   "overrides": {
     "bootstrap": {
       "main": [
-        "dist/css/bootstrap.css",
-        "dist/js/bootstrap.js"
+        "dist/css/bootstrap.min.css",
+        "dist/js/bootstrap.min.js"
       ]
     },
-    "font-awesome": {
+    "angular": {
       "main": [
-        "css/font-awesome.css"
+        "angular.min.js"
+      ]
+    },
+    "auth0-lock": {
+      "main": [
+        "build/auth0-lock.min.js"
+      ]
+    },
+    "auth0": {
+      "main": [
+        "build/auth0.min.js"
       ]
     }
   }

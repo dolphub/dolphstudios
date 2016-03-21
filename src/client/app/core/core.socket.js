@@ -5,6 +5,17 @@
     socket.$inject = ['$rootScope', 'store', 'toastr'];
     function socket($rootScope, store, toastr) {
         var socket;
+        connect();
+        var socketFactory = {
+            on: onHandle,
+            emit: emitHandle,
+            connected: connected
+        }
+        return socketFactory;
+
+        /**
+         * Connect to the socket server with jwt token.
+         */
         function connect() {
             socket = io.connect({
                 'query': 'token=' + store.get('token'),
@@ -23,40 +34,58 @@
             }
         }         
 
+        /**
+         * Disconnect socket from server, clear all listers and remove instance.
+         */
         function disconnect() {
             socket.removeAllListeners();
             socket.disconnect();
             socket = null;
         }
 
-        return {
-            connect: connect,
-            disconnect: disconnect,
-            on: function(evnt, callback) {
-                if(socket._callbacks.hasOwnProperty('$' + evnt)) {
-                    console.warn('Attempting to bind event that already exists...', evnt);
-                    return;
-                }
-                socket.on(evnt, function() {
-                    var args = arguments;
-                    $rootScope.$apply(function() {
-                        callback.apply(socket, args);
-                    });
-                });
-            },
-            emit: function(evnt, data, callback) {
-                socket.emit(evnt, data, function() {
-                    var args = arguments;
-                    $rootScope.$apply(function() {
-                        if (callback) {
-                            callback.apply(socket, args);
-                        }
-                    });
-                });
-            },
-            connected: function() {
-                return socket ? socket.connected : false;
+        /**
+         * Socket event definitions.
+         * @param {String} Event name to bind on.
+         * @param {function} Function callback.
+         */
+        function onHandle(evnt, callback) {
+            if(socket._callbacks.hasOwnProperty('$' + evnt)) {
+                console.warn('Attempting to bind event that already exists...', evnt);
+                return;
             }
+            socket.on(evnt, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    callback.apply(socket, args);
+                });
+            });
         }
+
+        /**
+         * Emit event definition
+         * @param Event name to bind.
+         * @param {Object} Data payload to send.
+         * @param {Function} Event Callback
+         */
+        function emitHandle(evnt, data, callback) {
+           socket.emit(evnt, data, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    if (callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            });
+        }
+
+        /**
+         * Checks if our socket is connected.
+         * @returns {Boolean}
+         */
+        function connected() {
+            return socket ? socket.connected : false;
+        }
+
+
     }
 })();

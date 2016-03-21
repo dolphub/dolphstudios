@@ -12,7 +12,7 @@
             scope: {
                 'data': '='
             },
-            templateUrl: 'app/widgets/chat/message.html'    
+            templateUrl: 'app/widgets/chat/directives/message/message.html'
         };
         
         /* @ngInject */

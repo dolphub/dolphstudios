@@ -1,0 +1,11 @@
+<section ng-controller="chatMessagesController as messagesVm" ng-loaded="{{ messagesVm.partialLoaded(vm) }}">
+	<div ng-show="vm.pMessages.length === 0">
+		<div class="alert alert-info">
+	        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	        It Appears you have no message history with anyone!  Go to the user's tab and click a user to start a conversation!
+	    </div>
+	</div>
+    <div ng-show="vm.pMessages.length > 0">
+	    <ds-input class="chatbox" ds-placeholder="Type here..." ds-enter="vm.sendMessage" ds-model="messagesVm.textInput"></ds-input>
+    </div>
+</section>

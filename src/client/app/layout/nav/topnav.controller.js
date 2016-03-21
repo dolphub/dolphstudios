@@ -77,7 +77,7 @@
             if (vm.isChatToggled) {
                 $timeout(function() {
                     $('#chatbar ds-input input:text').focus()
-                }, 40);                
+                }, 40);
             }
         }
 
