@@ -64,6 +64,11 @@
       "main": [
         "build/auth0.min.js"
       ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.min.css"
+      ]
     }
   }
 }
