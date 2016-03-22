@@ -2,9 +2,8 @@
     angular.module('app.core')
     .factory('apiInterceptor', apiInterceptor);
 
-
-    /* @ngInject */
     apiInterceptor.$inject = ['$rootScope'];
+    /* @ngInject */
     function apiInterceptor($rootScope) {
 
         var interceptor = {

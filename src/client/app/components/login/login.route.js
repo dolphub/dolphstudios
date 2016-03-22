@@ -2,8 +2,8 @@
     angular.module('app.home')
     .run(appRun);
     
-    /* @ngInject */
     appRun.$inject = ['routerHelper'];
+    /* @ngInject */
     function appRun(routerHelper) {
         var otherwise = 'home';
         routerHelper.configureStates(getStates(), otherwise);

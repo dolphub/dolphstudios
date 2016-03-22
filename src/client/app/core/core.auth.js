@@ -5,9 +5,9 @@
         .module('app.core')
         .config(appConfig)
         .run(appRun);
-        
-    /* @ngInject */
+    
     appConfig.$inject = ['authProvider', '$httpProvider','jwtInterceptorProvider'];
+    /* @ngInject */
     function appConfig(authProvider, $httpProvider,jwtInterceptorProvider) {
         authProvider.init({
             domain: 'dolphstudio.auth0.com',

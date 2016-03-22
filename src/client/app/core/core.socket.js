@@ -3,6 +3,7 @@
     .factory('socket', socket);
     
     socket.$inject = ['$rootScope', 'store', 'toastr'];
+    /* @ngInject */
     function socket($rootScope, store, toastr) {
         var socket;
         connect();

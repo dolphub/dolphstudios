@@ -2,8 +2,8 @@
     angular.module('app.profile')
     .run(appRun);
     
-    /* @ngInject */
     appRun.$inject = ['routerHelper'];
+    /* @ngInject */
     function appRun(routerHelper) {
         routerHelper.configureStates(getStates());
     }
