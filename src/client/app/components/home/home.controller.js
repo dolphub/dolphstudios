@@ -3,7 +3,6 @@
     .controller('HomeController', HomeController);
     
     HomeController.$inject = ['store', 'homeService', '$rootScope'];
-    /* @ngInject */
     function HomeController(store, homeService, $rootScope) {
         var vm = this;
         var profile = store.get('profile');        

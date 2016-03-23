@@ -8,6 +8,7 @@ var merge2 = require('merge2');
 var gulp = require('gulp');
 var path = require('path');
 var _ = require('lodash');
+var rimraf = require('rimraf');
 var fs = require('fs');
 var ngAnnotate = require('gulp-ng-annotate');
 var $ = require('gulp-load-plugins')({lazy: true});
@@ -18,15 +19,16 @@ var env = {
 
 
 gulp.task('clean-temp', function(done) {
-    if (fs.exists(config.production.main)) {
-        fs.rmdirSync(config.production.main);
-    }
     var files = [].concat(
         config.temp + '**/*.css',
         config.build + 'styles/**/*.css',
         config.temp + '**/*.js'
     );
     clean(files, done);
+});
+
+gulp.task('clean-dist', function(cb) {
+    rimraf(config.production.main, cb);
 });
 
 
@@ -53,8 +55,9 @@ gulp.task('wiredep', function() {
 gulp.task('build-dist-js', function() {
     return gulp
         .src(config.client + '**/*.js')
-        .pipe(ngAnnotate())
-        .pipe($.uglify({mangle: false})) // Causes problems
+        // .pipe($.if(config.jsOrder, $.order(config.jsOrder)))
+        // .pipe($.concat('applol.js'))
+        .pipe($.uglify({ mangle: false })) // Causes problems
         .pipe(gulp.dest(config.production.main));
 });
 
@@ -111,7 +114,7 @@ gulp.task('start', function() {
         .on('restart', ['wiredep', 'styles']);
 });
 
-gulp.task('clean', ['clean-temp']);
+gulp.task('clean', ['clean-temp', 'clean-dist']);
 if (env.production) { // jshint
     gulp.task('build', ['styles', 'build-dist', 'wiredep']);
     gulp.task('serve', ['start']);

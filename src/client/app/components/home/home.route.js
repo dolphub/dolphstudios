@@ -3,7 +3,6 @@
     .run(appRun);
     
     appRun.$inject = ['routerHelper'];
-    /* @ngInject */
     function appRun(routerHelper) {
         var otherwise = 'home';
         routerHelper.configureStates(getStates(), otherwise);

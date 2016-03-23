@@ -2,7 +2,6 @@
     angular.module('app.widgets')
     .directive('chat', Chat);
     
-    /* @ngInject */
     function Chat() {
         var directive = {
             bindToController: true,
@@ -14,7 +13,6 @@
         }
         return directive;
         
-        /* @ngInject */
         controller.$inject = ['$rootScope', 'logger', 'socket', 'toastr', 'moment', '$interval', 'store', 'Chat'];
         function controller($rootScope, logger, socket, toastr, $interval, store, Chat) {
             var vm = this;

@@ -14,8 +14,7 @@
             },
             templateUrl: 'app/widgets/chat/directives/message/message.html'
         };
-        
-        /* @ngInject */
+
         function controller() {
             var vm = this;
             vm.getTime = getTime;

@@ -7,7 +7,6 @@
         .run(appRun);
     
     appConfig.$inject = ['authProvider', '$httpProvider','jwtInterceptorProvider'];
-    /* @ngInject */
     function appConfig(authProvider, $httpProvider,jwtInterceptorProvider) {
         authProvider.init({
             domain: 'dolphstudio.auth0.com',
@@ -22,7 +21,6 @@
         $httpProvider.interceptors.push('apiInterceptor');
     }
     
-    /* @ngInject */
     appRun.$inject = ['$rootScope', 'logger', 'auth', 'store', 'jwtHelper', '$location'];
     function appRun($rootScope, logger, auth, store, jwtHelper, $location) {
         $rootScope.$on('$locationChangeStart', function() {
@@ -50,7 +48,6 @@
         };
     }
 
-    /* @ngInject */
     interceptor.$inject = [];
     function interceptor() {
 

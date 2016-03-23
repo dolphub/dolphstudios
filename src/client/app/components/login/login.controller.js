@@ -6,7 +6,6 @@
         .controller('LoginController', LoginController);
 
     LoginController.$inject = ['config', 'auth', '$location', 'store'];
-    /* @ngInject */
     function LoginController(config, auth, $location, store) {
         var vm = this;
         vm.config = config;

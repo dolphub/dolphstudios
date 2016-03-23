@@ -5,8 +5,6 @@
     angular
         .module('blocks.router')
         .provider('routerHelper', routerHelperProvider);
-
-    /* @ngInject */
     routerHelperProvider.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
     function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvider) {
         /* jshint validthis:true */
@@ -23,7 +21,6 @@
 
         this.$get = RouterHelper;
         RouterHelper.$inject = ['$location', '$rootScope', '$state', 'logger', '$timeout'];
-        /* @ngInject */
         function RouterHelper($location, $rootScope, $state, logger, $timeout) {
             var handlingStateChangeError = false;
             var hasOtherwise = false;

@@ -3,7 +3,6 @@
     .controller('SettingsController', SettingsController);
     
     SettingsController.$inject = ['store'];
-    /* @ngInject */
     function SettingsController(store) {
         var vm = this;
     }    

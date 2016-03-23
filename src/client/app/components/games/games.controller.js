@@ -3,7 +3,6 @@
     .controller('GamesController', GamesController);
     
     GamesController.$inject = ['store'];
-    /* @ngInject */
     function GamesController(store) {
         var vm = this;
     }    

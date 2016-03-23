@@ -8,7 +8,6 @@
         
     topNavController.$inject = ['$rootScope', '$timeout', 'auth', 'store', 
         '$state', 'toastr', '$window', 'config'];
-    /* @ngInject */
     function topNavController($rootScope, $timeout, auth, store, $state, toastr, $window, config) {
         var vm = this;
         vm.rootScope = $rootScope;

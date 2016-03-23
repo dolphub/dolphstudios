@@ -3,7 +3,6 @@
     .run(runHotKeys);
 
     runHotKeys.$inject = ['$rootScope', 'hotkeys'];
-    /* @ngInject */
     function runHotKeys($rootScope, hotkeys) {
         hotkeys.add({
             combo: 'shift+c',

@@ -63,7 +63,6 @@ app.use('/app/*', function(req, res, next) {
 app.use('/*', express.static('./src/client/index.html'));
 app.use(morgan('combined'));
 
-console.log(process.env.PORT);
 server.listen(process.env.PORT, function() {
     logger.info('Express server listening on port ' + process.env.PORT);
     logger.info('env = ' + app.get('env'));

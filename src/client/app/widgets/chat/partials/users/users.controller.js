@@ -3,7 +3,6 @@
 	.controller('chatUsersController', chatUsersController);
 
 	chatUsersController.$inject = ['$rootScope', 'store', 'logger', 'Chat'];
-	/* @ngInject */
 	function chatUsersController($rootScope, store, logger, Chat) {
 		var vm = this;
 		vm.users = [];

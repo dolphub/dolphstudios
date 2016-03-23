@@ -6,7 +6,6 @@
     core.config(toastrConfig);
 
     toastrConfig.$inject = ['toastr'];
-    /* @ngInject */
     function toastrConfig(toastr) {
         toastr.options.timeOut = 4000;
         toastr.options.positionClass = 'toast-bottom-right';
@@ -30,7 +29,6 @@
 
 
     core.config(resoureceConfig);
-    /* @ngInject */
     resoureceConfig.$inject = ['$resourceProvider'];
     function resoureceConfig($resourceProvider) {
         // Don't strip trailing slashes from calculated URLs

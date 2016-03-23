@@ -3,7 +3,6 @@
     .directive('dsInput', DSInput);
 
     DSInput.$inject = ['$timeout'];
-    /* @ngInject */
     function DSInput($timeout) {
         var directive = {
             bindToController: true,

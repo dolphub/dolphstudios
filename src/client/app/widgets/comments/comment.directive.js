@@ -15,7 +15,6 @@
             templateUrl: 'app/widgets/comments/comment.html'
         };
         
-        /* @ngInject */
         function controller() {
             var vm = this;
             vm.getTimestamp = getTimestamp

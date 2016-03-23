@@ -17,7 +17,6 @@
         return directive;      
         
         controller.$inject = ['store', '$http', 'Comments', '$timeout', 'auth'];
-        /* @ngInject */
         function controller(store, $http, Comments, $timeout, auth) {
             var vm = this;
             var profile = store.get('profile');

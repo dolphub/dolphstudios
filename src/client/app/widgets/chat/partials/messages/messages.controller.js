@@ -3,7 +3,6 @@
 	.controller('chatMessagesController', chatMessagesController);
 
 	chatMessagesController.$inject = [];
-	/* @ngInject */
 	function chatMessagesController() {
 		var vm = this;
 		vm.partialLoaded = partialLoaded;

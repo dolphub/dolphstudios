@@ -6,7 +6,6 @@
         .controller('ShellController', ShellController);
 
     ShellController.$inject = ['$rootScope', '$timeout', 'logger', 'auth'];
-    /* @ngInject */
     function ShellController($rootScope, $timeout, logger, auth) {
         var vm = this;
         vm.auth = auth;

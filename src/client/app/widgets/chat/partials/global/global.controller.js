@@ -3,7 +3,6 @@
 	.controller('chatGlobalController', chatGlobalController);
 
 	chatGlobalController.$inject = ['$rootScope', 'socket', 'store'];
-	/* @ngInject */
 	function chatGlobalController($rootScope, socket, store) {
 		var vm = this;
 		vm.messages = [];

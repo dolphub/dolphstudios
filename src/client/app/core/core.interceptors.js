@@ -3,7 +3,6 @@
     .factory('apiInterceptor', apiInterceptor);
 
     apiInterceptor.$inject = ['$rootScope'];
-    /* @ngInject */
     function apiInterceptor($rootScope) {
 
         var interceptor = {

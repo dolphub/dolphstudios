@@ -3,7 +3,6 @@
     .factory('homeService', dataservice);
     
     dataservice.$inject = ['logger', '$http'];
-    /* @ngInject */
     function dataservice(logger, $http) {
         var service = {
             getUser: getUser
