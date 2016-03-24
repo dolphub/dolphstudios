@@ -30,7 +30,6 @@ gulp.task('clean-temp', function(done) {
 gulp.task('clean-dist', function(cb) {
     return gulp.src(config.production.main)
         .pipe(rimraf());
-    // rimraf(config.production.main, cb);
 });
 
 
@@ -40,13 +39,9 @@ gulp.task('clean-dist', function(cb) {
  */
 gulp.task('wiredep', function() {
     console.log('Wiring the bower dependencies into the html...');
-    
     var wiredep = require('wiredep').stream;
-    var options = config.getWiredepDefaultOptions();
-    
-    // Only include stubs if flag is enabled
-    var js = args.stubs ? [].concat(config.js, config.stubsjs) : config.js;
-    
+    var options = config.getWiredepDefaultOptions();    
+    var js = args.stubs ? [].concat(config.js, config.stubsjs) : config.js;    
     return gulp
         .src(config.index)
         .pipe(wiredep(options))
@@ -54,7 +49,10 @@ gulp.task('wiredep', function() {
         .pipe(gulp.dest(config.client));
 });
 
+
 gulp.task('build-dist-js', function() {
+    // TODO: Wiredep changes required for production to exclude custom js and include all.min.js
+    // TODO: all.min.js Bower Dependancy minifications
     return gulp
         .src(config.client + '**/*.js')
         .pipe($.sourcemaps.init())
