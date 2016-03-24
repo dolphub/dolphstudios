@@ -8,4 +8,4 @@
             'ngResource', 'cfp.hotkeys', 'angular-spinkit', 'infinite-scroll',
             'blocks.logger', 'blocks.router'
         ]);
-})();1
+})();

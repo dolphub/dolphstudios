@@ -58,6 +58,7 @@ gulp.task('build-dist-js', function() {
     return gulp
         .src(config.client + '**/*.js')
         .pipe($.sourcemaps.init())
+        .pipe($.if(config.jsOrder, $.order(config.jsOrder)))
         .pipe($.concat('all.min.js'))
         .pipe(ngAnnotate({
             add: true
