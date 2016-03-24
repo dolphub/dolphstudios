@@ -42,8 +42,10 @@ app.use(express.static('./bower_components/'));
 // Serve ui content
 if (isProduction) {
     app.use(express.static('./dist/'));
+    app.use('/*', express.static('./dist/index.html'));
 } else {
     app.use(express.static('./src/client/'));    
+    app.use('/*', express.static('./src/client/index.html'));
 }
 
 
@@ -60,7 +62,7 @@ app.use('/app/*', function(req, res, next) {
 });
 
 // Any deep link calls should return index.html
-app.use('/*', express.static('./src/client/index.html'));
+app.use('/*', express.static('./dist/client/index.html'));
 app.use(morgan('combined'));
 
 server.listen(process.env.PORT, function() {

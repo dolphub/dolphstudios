@@ -8,7 +8,7 @@ var merge2 = require('merge2');
 var gulp = require('gulp');
 var path = require('path');
 var _ = require('lodash');
-var rimraf = require('rimraf');
+var rimraf = require('gulp-rimraf');
 var fs = require('fs');
 var ngAnnotate = require('gulp-ng-annotate');
 var $ = require('gulp-load-plugins')({lazy: true});
@@ -28,7 +28,9 @@ gulp.task('clean-temp', function(done) {
 });
 
 gulp.task('clean-dist', function(cb) {
-    rimraf(config.production.main, cb);
+    return gulp.src(config.production.main)
+        .pipe(rimraf());
+    // rimraf(config.production.main, cb);
 });
 
 
@@ -55,9 +57,15 @@ gulp.task('wiredep', function() {
 gulp.task('build-dist-js', function() {
     return gulp
         .src(config.client + '**/*.js')
-        // .pipe($.if(config.jsOrder, $.order(config.jsOrder)))
-        // .pipe($.concat('applol.js'))
-        .pipe($.uglify({ mangle: false })) // Causes problems
+        .pipe($.sourcemaps.init())
+        .pipe($.concat('all.min.js'))
+        .pipe(ngAnnotate({
+            add: true
+        }))
+        .pipe($.bytediff.start())
+        // .pipe($.uglify({mangle: false})) // Causes problems
+        .pipe($.bytediff.stop())
+        .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(config.production.main));
 });
 
