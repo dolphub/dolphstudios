@@ -18,18 +18,19 @@ var env = {
 };
 
 
-gulp.task('clean-temp', function(done) {
-    var files = [].concat(
-        config.temp + '**/*.css',
-        config.build + 'styles/**/*.css',
-        config.temp + '**/*.js'
-    );
-    clean(files, done);
-});
+// gulp.task('clean-temp', function(done) {
+//     var files = [].concat(
+//         config.temp + '**/*.css',
+//         config.build + 'styles/**/*.css',
+//         config.temp + '**/*.js'
+//     );
+//     clean(files, done);
+// });
 
-gulp.task('clean-dist', function(cb) {
-    return gulp.src(config.production.main)
-        .pipe(rimraf());
+gulp.task('clean', function(done) {
+    var delconfig = [].concat(config.temp, config.production.main);
+    console.log('Cleaning: ' + $.util.colors.blue(delconfig));
+    del(delconfig, done);
 });
 
 
@@ -37,13 +38,24 @@ gulp.task('clean-dist', function(cb) {
  * Wire-up the bower dependencies
  * @return {Stream}
  */
-gulp.task('wiredep', function() {
+gulp.task('wiredep', ['build-dist-js'], function() {
     console.log('Wiring the bower dependencies into the html...');
     var wiredep = require('wiredep').stream;
-    var options = config.getWiredepDefaultOptions();    
-    var js = args.stubs ? [].concat(config.js, config.stubsjs) : config.js;    
+    var options = config.getWiredepDefaultOptions(!env.production);
+    var js, index;
+    
+    // TODO: Wiredep not injecting into dist/index, it's using the dev index
+    js = [].concat(config.stubsjs);
+    js = env.production ? 
+        js.concat(config.production.appjs)
+        : js.concat(config.js);
+        
+    index = env.production ? config.production.index : config.index;
+        
+    console.log(js);
+    console.log(index);
     return gulp
-        .src(config.index)
+        .src(index)
         .pipe(wiredep(options))
         .pipe(inject(js, '', config.jsOrder))
         .pipe(gulp.dest(config.client));
@@ -51,7 +63,6 @@ gulp.task('wiredep', function() {
 
 
 gulp.task('build-dist-js', function() {
-    // TODO: Wiredep changes required for production to exclude custom js and include all.min.js
     // TODO: all.min.js Bower Dependancy minifications
     return gulp
         .src(config.client + '**/*.js')
@@ -86,17 +97,13 @@ gulp.task('build-dist', ['build-dist-js', 'build-dist-html', 'build-dist-images'
  * Watchers
  */
 gulp.task('sass-watcher', function() {
-    if (!env.production) {
-        console.log('Starting Sass Watcher.');
-        gulp.watch([config.sass], ['styles']);
-    }
+    console.log('Starting Sass Watcher.');
+    gulp.watch([config.sass], ['styles']);
 });
 
 gulp.task('client-watcher', function() {
-    if (!env.production) {
-        console.log('Starting Client Watcher.');
-        gulp.watch([config.client + '**/*.js'], ['wiredep']);
-    }
+    console.log('Starting Client Watcher.');
+    gulp.watch([config.client + '**/*.js'], ['wiredep']);
 });
 
 /**
@@ -114,14 +121,11 @@ gulp.task('styles', function() {
         .pipe(gulp.dest(config.temp));
 });
 
-
-
 gulp.task('start', function() {
     $.nodemon(env.production ? getNodeOptions(false) : getNodeOptions(true))
         .on('restart', ['wiredep', 'styles']);
 });
 
-gulp.task('clean', ['clean-temp', 'clean-dist']);
 if (env.production) { // jshint
     gulp.task('build', ['styles', 'build-dist', 'wiredep']);
     gulp.task('serve', ['start']);
@@ -206,11 +210,11 @@ function getHeader() {
  * @returns {Stream}   The stream
  */
 function inject(src, label, order) {
-    var options = config.getInjectOptions();
+    var options = config.getInjectOptions(!env.production);
     if (label) {
         options.name = 'inject:' + label;
     }
-
+    
     return $.inject(orderSrc(src, order), options);
 }
 

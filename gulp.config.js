@@ -108,26 +108,29 @@ module.exports = function() {
         production: {
             main: './dist/',
             vendorJs: './.tmp/',
-            src: './dist/src/'
+            src: './dist/src/',
+            appjs: './dist/*.js',
+            index: './dist/index.html',
+            bowerIgnorePath: '../bower_components'
         }
     };
 
     /**
      * wiredep and bower settings
      */
-    config.getWiredepDefaultOptions = function() {
+    config.getWiredepDefaultOptions = function(isDev) {
         var options = {
             bowerJson: config.bower.json,
             directory: config.bower.directory,
-            ignorePath: config.bower.ignorePath
+            ignorePath: isDev ? config.bower.ignorePath : config.production.bowerIgnorePath 
         };
         return options;
     };
 
-    config.getInjectOptions = function () {
+    config.getInjectOptions = function (isDev) {
         var options = {
             read: false,
-            ignorePath: "/src/client/"
+            ignorePath: isDev ? '/src/client/' : '/dist/'
         };
         return options;
     };
