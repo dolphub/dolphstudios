@@ -38,10 +38,10 @@ gulp.task('clean', function(done) {
  * Wire-up the bower dependencies
  * @return {Stream}
  */
-gulp.task('wiredep', ['build-dist-js'], function() {
+gulp.task('wiredep', function() {
     console.log('Wiring the bower dependencies into the html...');
     var wiredep = require('wiredep').stream;
-    var options = config.getWiredepDefaultOptions(!env.production);
+    var options = config.getWiredepDefaultOptions(true);
     var js, index;
     
     // TODO: Wiredep not injecting into dist/index, it's using the dev index
@@ -50,12 +50,10 @@ gulp.task('wiredep', ['build-dist-js'], function() {
         js.concat(config.production.appjs)
         : js.concat(config.js);
         
-    index = env.production ? config.production.index : config.index;
-        
     console.log(js);
     console.log(index);
     return gulp
-        .src(index)
+        .src(config.index)
         .pipe(wiredep(options))
         .pipe(inject(js, '', config.jsOrder))
         .pipe(gulp.dest(config.client));
@@ -79,7 +77,7 @@ gulp.task('build-dist-js', function() {
         .pipe(gulp.dest(config.production.main));
 });
 
-gulp.task('build-dist-html', function() {
+gulp.task('build-dist-html', ['wiredep'], function() {
     return gulp
         .src(config.client + '**/*.html')
         .pipe(gulp.dest(config.production.main));
@@ -127,9 +125,9 @@ gulp.task('start', function() {
 });
 
 if (env.production) { // jshint
-    gulp.task('build', ['styles', 'build-dist', 'wiredep']);
+    gulp.task('build', ['styles', 'wiredep', 'build-dist']);
     gulp.task('serve', ['start']);
-} else {
+} else { 
     gulp.task('build', ['styles', 'wiredep']);
     gulp.task('serve', ['start', 'sass-watcher', 'client-watcher']);
 }
