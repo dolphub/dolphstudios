@@ -30,15 +30,17 @@ var env = {
 gulp.task('clean', function(done) {
     var delconfig = [].concat(config.temp, config.production.main);
     console.log('Cleaning: ' + $.util.colors.blue(delconfig));
-    del(delconfig, done);
+    setTimeout(function() {
+        done();
+    }, 1500);
+    del(delconfig)
 });
-
 
 /**
  * Wire-up the bower dependencies
  * @return {Stream}
  */
-gulp.task('wiredep', function() {
+gulp.task('wiredep', env.production ? ['build-dist-js'] : [], function() {
     console.log('Wiring the bower dependencies into the html...');
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions(true);
@@ -50,8 +52,6 @@ gulp.task('wiredep', function() {
         js.concat(config.production.appjs)
         : js.concat(config.js);
         
-    console.log(js);
-    console.log(index);
     return gulp
         .src(config.index)
         .pipe(wiredep(options))
@@ -71,7 +71,7 @@ gulp.task('build-dist-js', function() {
             add: true
         }))
         .pipe($.bytediff.start())
-        // .pipe($.uglify({mangle: false})) // Causes problems
+        .pipe($.uglify({mangle: false})) // mangle: true Causes problems
         .pipe($.bytediff.stop())
         .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(config.production.main));
@@ -89,7 +89,7 @@ gulp.task('build-dist-images', function() {
         .pipe(gulp.dest(config.production.main + 'images'));
 });
 
-gulp.task('build-dist', ['build-dist-js', 'build-dist-html', 'build-dist-images']);
+gulp.task('build-dist', ['build-dist-html', 'build-dist-images']);
 
 /**
  * Watchers
@@ -125,7 +125,7 @@ gulp.task('start', function() {
 });
 
 if (env.production) { // jshint
-    gulp.task('build', ['styles', 'wiredep', 'build-dist']);
+    gulp.task('build', ['styles', 'build-dist']);
     gulp.task('serve', ['start']);
 } else { 
     gulp.task('build', ['styles', 'wiredep']);
