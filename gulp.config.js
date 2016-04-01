@@ -8,6 +8,7 @@ module.exports = function() {
     var wiredep = require('wiredep');
     var bowerFiles = wiredep({devDependencies: false})['js'];
     var bower = {
+        file: './bower.json',
         json: require('./bower.json'),
         directory: './bower_components/',
         ignorePath: '../../bower_components/'

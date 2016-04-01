@@ -11,6 +11,7 @@ var _ = require('lodash');
 var rimraf = require('gulp-rimraf');
 var fs = require('fs');
 var ngAnnotate = require('gulp-ng-annotate');
+var bower = require('gulp-main-bower-files');
 var $ = require('gulp-load-plugins')({lazy: true});
 
 var env = {
@@ -67,12 +68,13 @@ gulp.task('build-dist-js', function() {
         .pipe($.sourcemaps.init())
         .pipe($.if(config.jsOrder, $.order(config.jsOrder)))
         .pipe($.concat('all.min.js'))
+        .pipe($.bytediff.start())
         .pipe(ngAnnotate({
             add: true
         }))
-        .pipe($.bytediff.start())
         .pipe($.uglify({mangle: false})) // mangle: true Causes problems
         .pipe($.bytediff.stop())
+        .pipe(getHeader())
         .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(config.production.main));
 });
@@ -87,6 +89,10 @@ gulp.task('build-dist-images', function() {
     return gulp
         .src(config.client + 'images/*.*')
         .pipe(gulp.dest(config.production.main + 'images'));
+});
+
+gulp.task('bundle', function() {
+    // TODO:  Finish bundle task, minify vendor and package
 });
 
 gulp.task('build-dist', ['build-dist-html', 'build-dist-images']);
