@@ -1,101 +1,22 @@
-'use strict';
-
 var args = require('yargs').argv;
 var config = require('./gulp.config')();
 var del = require('del');
 var glob = require('glob');
-var merge2 = require('merge2');
 var gulp = require('gulp');
-var path = require('path');
 var _ = require('lodash');
-var rimraf = require('gulp-rimraf');
-var fs = require('fs');
 var ngAnnotate = require('gulp-ng-annotate');
-var bower = require('gulp-main-bower-files');
 var $ = require('gulp-load-plugins')({lazy: true});
 
+var colors = $.util.colors;
 var env = {
-    production: !!$.util.env.production
+    production: !!$.util.env.production,
+    staging: !!$.util.env.staging
 };
 
-
-// gulp.task('clean-temp', function(done) {
-//     var files = [].concat(
-//         config.temp + '**/*.css',
-//         config.build + 'styles/**/*.css',
-//         config.temp + '**/*.js'
-//     );
-//     clean(files, done);
-// });
-
-gulp.task('clean', function(done) {
-    var delconfig = [].concat(config.temp, config.production.main);
-    console.log('Cleaning: ' + $.util.colors.blue(delconfig));
-    setTimeout(function() {
-        done();
-    }, 1500);
-    del(delconfig)
-});
-
-/**
- * Wire-up the bower dependencies
- * @return {Stream}
- */
-gulp.task('wiredep', env.production ? ['build-dist-js'] : [], function() {
-    console.log('Wiring the bower dependencies into the html...');
-    var wiredep = require('wiredep').stream;
-    var options = config.getWiredepDefaultOptions(true);
-    var js, index;
-    
-    // TODO: Wiredep not injecting into dist/index, it's using the dev index
-    js = [].concat(config.stubsjs);
-    js = env.production ? 
-        js.concat(config.production.appjs)
-        : js.concat(config.js);
-        
-    return gulp
-        .src(config.index)
-        .pipe(wiredep(options))
-        .pipe(inject(js, '', config.jsOrder))
-        .pipe(gulp.dest(config.client));
-});
+gulp.task('help', $.taskListing);
+gulp.task('default', ['help']);
 
 
-gulp.task('build-dist-js', function() {
-    // TODO: all.min.js Bower Dependancy minifications
-    return gulp
-        .src(config.client + '**/*.js')
-        .pipe($.sourcemaps.init())
-        .pipe($.if(config.jsOrder, $.order(config.jsOrder)))
-        .pipe($.concat('all.min.js'))
-        .pipe($.bytediff.start())
-        .pipe(ngAnnotate({
-            add: true
-        }))
-        .pipe($.uglify({mangle: false})) // mangle: true Causes problems
-        .pipe($.bytediff.stop())
-        .pipe(getHeader())
-        .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(config.production.main));
-});
-
-gulp.task('build-dist-html', ['wiredep'], function() {
-    return gulp
-        .src(config.client + '**/*.html')
-        .pipe(gulp.dest(config.production.main));
-});
-
-gulp.task('build-dist-images', function() {
-    return gulp
-        .src(config.client + 'images/*.*')
-        .pipe(gulp.dest(config.production.main + 'images'));
-});
-
-gulp.task('bundle', function() {
-    // TODO:  Finish bundle task, minify vendor and package
-});
-
-gulp.task('build-dist', ['build-dist-html', 'build-dist-images']);
 
 /**
  * Watchers
@@ -111,36 +32,137 @@ gulp.task('client-watcher', function() {
 });
 
 /**
- * Compile less to css
+ * Compile sass to css
  * @return {Stream}
  */
-gulp.task('styles', function() {
-    console.log('Compiling SCSS --> CSS');
+gulp.task('styles', ['clean-styles'], function() {
+    console.log('Compiling SCSS --> CSS and concating to one file');
+
     return gulp
         .src(config.sass)
         .pipe($.flatten())
-        .pipe($.sass(env.production ? config.sassConfigProd : config.sassConfig).on('error', $.sass.logError))
+        .pipe($.sass(config.getSassConfig(!env.production)).on('error', $.sass.logError))
         .pipe($.concat('styles.css'))
         .pipe($.plumber())
         .pipe(gulp.dest(config.temp));
 });
 
+gulp.task('images', ['clean-images'], function() {
+    return gulp
+        .src(config.images)
+        .pipe($.if(args.verbose, $.bytediff.start()))
+        .pipe($.imagemin({optimizationLevel: 4}))
+        .pipe($.if(args.verbose, $.bytediff.stop(bytediffFormatter)))
+        .pipe(gulp.dest(config.build.images));
+});
+
+/**
+ * Wire-up the bower dependencies
+ * @return {Stream}
+ */
+gulp.task('wiredep', function() {
+    log('Wiring the bower dependencies into the html');
+
+    var wiredep = require('wiredep').stream;
+    var options = config.getWiredepDefaultOptions();
+
+    // Only include stubs if flag is enabled
+    var js = args.stubs ? [].concat(config.js, config.stubsjs) : config.js;
+    var css = [].concat(config.appCss);
+
+    console.log(css);
+
+    return gulp
+        .src(config.index)
+        .pipe(wiredep(options))
+        .pipe(inject(js, '', config.jsOrder))
+        .pipe(gulp.dest(config.client));
+});
+
+gulp.task('inject', ['styles', 'wiredep'], function() {
+    gulp.src(config.index)
+        .pipe(inject(config.css))
+        .pipe(gulp.dest(config.client));
+});
+
+
+
+
+/*FIX ME >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+gulp.task('build-build-js', function() {
+    // TODO: all.min.js Bower Dependancy minifications
+    // return gulp
+    //     .src(config.client + '**/*.js')
+    //     .pipe($.sourcemaps.init())
+    //     .pipe($.if(config.jsOrder, $.order(config.jsOrder)))
+    //     .pipe($.concat('all.min.js'))
+    //     .pipe($.bytediff.start())
+    //     .pipe(ngAnnotate({
+    //         add: true
+    //     }))
+    //     .pipe($.uglify({mangle: false})) // mangle: true Causes problems
+    //     .pipe($.bytediff.stop(bytediffFormatter))
+    //     .pipe(getHeader())
+    //     .pipe($.sourcemaps.write('./'))
+    //     .pipe(gulp.dest(config.production.main));
+});
+
+gulp.task('build-html', ['wiredep'], function() {
+    // return gulp
+    //     .src(config.client + '**/*.html')
+    //     .pipe(gulp.dest(config.production.main));
+});
+
+gulp.task('bundle', function() {
+    // TODO:  Finish bundle task, minify vendor and package
+});
+
+// gulp.task('build-build', ['build-build-html', 'build-build-images']);
+
+
 gulp.task('start', function() {
-    $.nodemon(env.production ? getNodeOptions(false) : getNodeOptions(true))
-        .on('restart', ['wiredep', 'styles']);
+    $.nodemon(getNodeOptions(!env.productio3n))
+        .on('restart', ['wiredep', 'sass']);
 });
 
 if (env.production) { // jshint
-    gulp.task('build', ['styles', 'build-dist']);
+    gulp.task('build', ['styles', 'build-build']);
     gulp.task('serve', ['start']);
 } else { 
     gulp.task('build', ['styles', 'wiredep']);
     gulp.task('serve', ['start', 'sass-watcher', 'client-watcher']);
 }
 
-gulp.task('default', ['clean', 'build', 'serve']);
+// gulp.task('default', ['clean', 'build', 'serve']);
+/*FIX ME <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
+/**
+ * Clean styles
+ */
+gulp.task('clean-styles', function() {
+    var files = [].concat(
+        config.temp + '**/*.css'
+    );
+    return clean(files);
+});
 
+/**
+ * Clean images
+ */
+gulp.task('clean-images', function() {
+    var files = [].concat(
+        config.build.images + '**/*.*'
+    );
+    return clean(files);
+});
+
+gulp.task('clean-build', function() {
+    var files = [].concat(config.build.path);
+    return clean(files);
+});
+
+gulp.task('clean', ['clean-styles', 'clean-build']);
 
 function getNodeOptions(isDev) {
     return {
@@ -158,9 +180,9 @@ function getNodeOptions(isDev) {
  * @param  {Array}   path - array of paths to delete
  * @param  {Function} done - callback when complete
  */
-function clean(path, done) {
-    console.log('Cleaning: ', path);
-    del(path, done);
+function clean(path) {
+    console.log('Cleaning: ' + $.util.colors.blue(path));
+    return del(path);
 }
 
 /**
@@ -206,6 +228,18 @@ function getHeader() {
     });
 }
 
+function log(msg) {
+    if (typeof(msg) === 'object') {
+        for (var item in msg) {
+            if (msg.hasOwnProperty(item)) {
+                $.util.log($.util.colors.blue(msg[item]));
+            }
+        }
+    } else {
+        $.util.log($.util.colors.blue(msg));
+    }
+}
+
 /**
  * Inject files in a sorted sequence at a specified inject label
  * @param   {Array} src   glob pattern for source files
@@ -228,9 +262,11 @@ function inject(src, label, order) {
  * @param   {Array} order Glob array pattern
  * @returns {Stream} The ordered stream
  */
-function orderSrc (src, order) {
+function orderSrc(src, order) {
     //order = order || ['**/*'];
     return gulp
         .src(src)
         .pipe($.if(order, $.order(order)));
 }
+
+module.exports = gulp;

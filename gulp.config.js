@@ -8,20 +8,9 @@ module.exports = function() {
     var wiredep = require('wiredep');
     var bowerFiles = wiredep({devDependencies: false})['js'];
     var bower = {
-        file: './bower.json',
         json: require('./bower.json'),
         directory: './bower_components/',
         ignorePath: '../../bower_components/'
-    };
-    var sassConfig = {
-        errLogToConsole: true,
-        outputStyle: 'expanded',
-        includePaths: [ 'src/client/styles/']
-    };
-    var sassConfigProd = {
-        errLogToConsole: true,
-        outputStyle: 'compressed',
-        includePaths: [ 'src/client/styles/']
     };
     var nodeModules = 'node_modules';
 
@@ -36,7 +25,7 @@ module.exports = function() {
         ],
         build: './build/',
         client: client,
-        css: clientApp + 'styles.css',
+        css: temp + 'styles.css',
         fonts: bower.directory + 'font-awesome/fonts/**/*.*',
         html: client + '**/*.html',
         htmltemplates: clientApp + '**/*.html',
@@ -53,11 +42,7 @@ module.exports = function() {
             '**/*.module.js',
             '**/*.js'
         ],
-        less: client + 'styles/styles.less',
         sass: client + '**/*.scss',
-        customFonts: client + '**/*.ttf',
-        sassConfig: sassConfig,
-        sassConfigProd: sassConfigProd,
         root: root,
         server: server,
         source: 'src/',
@@ -106,12 +91,12 @@ module.exports = function() {
          */
         nodeServer: server + 'app.js',
         defaultPort: '3001',
-        production: {
-            main: './dist/',
-            vendorJs: './.tmp/',
-            src: './dist/src/',
-            appjs: './dist/*.js',
-            index: './dist/index.html',
+        build: {
+            path: './build/',
+            images: './build/images/',
+            src: './build/src/',
+            appjs: './build/*.js',
+            index: './build/index.html',
             bowerIgnorePath: '../bower_components'
         }
     };
@@ -119,11 +104,11 @@ module.exports = function() {
     /**
      * wiredep and bower settings
      */
-    config.getWiredepDefaultOptions = function(isDev) {
+    config.getWiredepDefaultOptions = function() {
         var options = {
             bowerJson: config.bower.json,
             directory: config.bower.directory,
-            ignorePath: isDev ? config.bower.ignorePath : config.production.bowerIgnorePath 
+            ignorePath: config.bower.ignorePath 
         };
         return options;
     };
@@ -131,10 +116,22 @@ module.exports = function() {
     config.getInjectOptions = function (isDev) {
         var options = {
             read: false,
-            ignorePath: isDev ? '/src/client/' : '/dist/'
+            ignorePath: [
+                isDev ? '/src/client/' : '/build/',
+                '/.tmp/'
+            ]
         };
         return options;
     };
+
+    config.getSassConfig = function(isDev) {
+        var options = {
+            errLogToConsole: true,
+            outputStyle: isDev ? 'expanded' : 'compressed',
+            includePaths: [ 'src/client/styles/']
+        };
+        return options;
+    }
 
 
     return config;
