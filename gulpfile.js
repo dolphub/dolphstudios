@@ -89,35 +89,37 @@ gulp.task('inject', ['styles', 'wiredep'], function() {
 
 gulp.task('optimize', ['inject'], function() {
 
-    var cssFilter = $.filter(config.temp + '*.css');
-    var jsAppFilter = $.filter('**/' + config.optimized.app);
-    var jslibFilter = $.filter('**/' + config.optimized.lib);
+    var cssFilter = $.filter('**/styles.css', {restore: true});
+    var jsAppFilter = $.filter('**/' + config.optimized.app, {restore: true});
+    var jslibFilter = $.filter('**/' + config.optimized.lib, {restore: true});
 
+
+    // TODO:  Filter's don't seem to be working
     gulp.src(config.index)
         .pipe($.plumber())
 
         // Get the css
         .pipe(cssFilter)
         .pipe($.minifyCss())
-        .pipe(cssFilter.restore())
+        .pipe(cssFilter.restore)
 
         // Custom Javascript
         .pipe(jsAppFilter)
         .pipe($.ngAnnotate({add: true}))
         .pipe($.uglify())
         .pipe(getHeader())
-        .pipe(jsAppFilter.restore())
+        .pipe(jsAppFilter.restore)
 
-        // Vendor Javascript
+        // // Vendor Javascript
         .pipe(jslibFilter)
         .pipe($.uglify()) // another option is to override wiredep to use min files
-        .pipe(jslibFilter.restore())
+        .pipe(jslibFilter.restore)
         .pipe($.rev())
 
         .pipe(useref())
-        .pipe($.if('*.css', $.minifyCss()))
+        // .pipe($.if('*.css', $.minifyCss()))
 
-        .pipe($.revReplace())
+        // .pipe($.revReplace())
         .pipe(gulp.dest(config.build.path));
 });
 
