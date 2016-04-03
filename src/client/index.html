@@ -12,9 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <base href="/">
 
-    <!-- build:css styles/lib.css -->
+    <!-- build:css(bower_components) styles/lib.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="toastr/toastr.css" />
     <link rel="stylesheet" href="font-awesome-animation/dist/font-awesome-animation.css" />
@@ -25,7 +24,7 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:css styles/app.css -->
+    <!-- build:css(.tmp) styles/app.css -->
     <!-- inject:css -->
     <link rel="stylesheet" href="/styles.css">
     <!-- endinject -->
@@ -42,13 +41,13 @@
     <!--socket.io-->
     <script src="/socket.io/socket.io.js"></script>
 
-    <!-- build:js js/lib.js -->
+    <!-- build:js(bower_components) js/lib.jss -->
     <!-- bower:js -->
     <script src="jquery/dist/jquery.js"></script>
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="angular/angular.min.js"></script>
+    <script src="angular/angular.js"></script>
     <script src="auth0.js/build/auth0.js"></script>
-    <script src="auth0-lock/build/auth0-lock.min.js"></script>
+    <script src="auth0-lock/build/auth0-lock.js"></script>
     <script src="auth0-angular/build/auth0-angular.js"></script>
     <script src="angular-animate/angular-animate.js"></script>
     <script src="toastr/toastr.js"></script>

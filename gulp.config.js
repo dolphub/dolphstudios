@@ -124,10 +124,10 @@ module.exports = function() {
         return options;
     };
 
-    config.getSassConfig = function(isDev) {
+    config.getSassConfig = function() {
         var options = {
             errLogToConsole: true,
-            outputStyle: isDev ? 'expanded' : 'compressed',
+            outputStyle: 'expanded',
             includePaths: [ 'src/client/styles/']
         };
         return options;

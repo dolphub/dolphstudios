@@ -42,7 +42,7 @@ gulp.task('styles', ['clean-styles'], function() {
     return gulp
         .src(config.sass)
         .pipe($.flatten())
-        .pipe($.sass(config.getSassConfig(!env.production)).on('error', $.sass.logError))
+        .pipe($.sass(config.getSassConfig()).on('error', $.sass.logError))
         .pipe($.concat('styles.css'))
         .pipe($.plumber())
         .pipe(gulp.dest(config.temp));
@@ -87,8 +87,28 @@ gulp.task('inject', ['styles', 'wiredep'], function() {
         .pipe(gulp.dest(config.client));
 });
 
-gulp.task('optimize', function() {
+gulp.task('optimize', ['inject'], function() {
 
+    var jsAppFilter = $.filter('**/' + config.optimized.app);
+    var jslibFilter = $.filter('**/' + config.optimized.lib);
+
+    gulp.src(config.index)
+        .pipe($.plumber());
+        // Custom Javascript
+        .pipe(jsAppFilter)
+        .pipe($.ngAnnotate({add: true}))
+        .pipe($.uglify())
+        .pipe(getHeader())
+        .pipe(jsAppFilter.restore())
+        // Vendor Javascript
+        .pipe(jslibFilter)
+        .pipe($.uglify()) // another option is to override wiredep to use min files
+        .pipe(jslibFilter.restore())
+        .pipe($.rev())
+        .pipe(useref())
+        .pipe($.if('*.css', $.minifyCss()))
+        .pipe($.if('*.js', $.uglify({mangle: false})))
+        .pipe(gulp.dest(config.build.path));
 });
 
 
