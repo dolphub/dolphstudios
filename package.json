@@ -39,7 +39,7 @@
     "gulp-clean": "^0.3.2",
     "gulp-clean-css": "^2.0.3",
     "gulp-concat": "^2.6.0",
-    "gulp-filter": "^3.0.1",
+    "gulp-filter": "^4.0.0",
     "gulp-flatten": "^0.2.0",
     "gulp-header": "^1.7.1",
     "gulp-if": "^2.0.0",

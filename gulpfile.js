@@ -89,25 +89,35 @@ gulp.task('inject', ['styles', 'wiredep'], function() {
 
 gulp.task('optimize', ['inject'], function() {
 
+    var cssFilter = $.filter(config.temp + '*.css');
     var jsAppFilter = $.filter('**/' + config.optimized.app);
     var jslibFilter = $.filter('**/' + config.optimized.lib);
 
     gulp.src(config.index)
-        .pipe($.plumber());
+        .pipe($.plumber())
+
+        // Get the css
+        .pipe(cssFilter)
+        .pipe($.minifyCss())
+        .pipe(cssFilter.restore())
+
         // Custom Javascript
         .pipe(jsAppFilter)
         .pipe($.ngAnnotate({add: true}))
         .pipe($.uglify())
         .pipe(getHeader())
         .pipe(jsAppFilter.restore())
+
         // Vendor Javascript
         .pipe(jslibFilter)
         .pipe($.uglify()) // another option is to override wiredep to use min files
         .pipe(jslibFilter.restore())
         .pipe($.rev())
+
         .pipe(useref())
         .pipe($.if('*.css', $.minifyCss()))
-        .pipe($.if('*.js', $.uglify({mangle: false})))
+
+        .pipe($.revReplace())
         .pipe(gulp.dest(config.build.path));
 });
 
