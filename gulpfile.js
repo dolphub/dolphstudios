@@ -2,6 +2,7 @@ var args = require('yargs').argv;
 var config = require('./gulp.config')();
 var del = require('del');
 var glob = require('glob');
+var useref = require('gulp-useref');
 var gulp = require('gulp');
 var _ = require('lodash');
 var ngAnnotate = require('gulp-ng-annotate');
@@ -80,9 +81,14 @@ gulp.task('wiredep', function() {
 });
 
 gulp.task('inject', ['styles', 'wiredep'], function() {
+    var css = [].concat(config.css); // Add specific generated files here
     gulp.src(config.index)
-        .pipe(inject(config.css))
+        .pipe(inject(css))
         .pipe(gulp.dest(config.client));
+});
+
+gulp.task('optimize', function() {
+
 });
 
 
