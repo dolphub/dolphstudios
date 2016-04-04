@@ -3,6 +3,7 @@ var config = require('./gulp.config')();
 var del = require('del');
 var glob = require('glob');
 var useref = require('gulp-useref');
+var lazypipe = require('lazypipe');
 var gulp = require('gulp');
 var _ = require('lodash');
 var ngAnnotate = require('gulp-ng-annotate');
@@ -89,38 +90,24 @@ gulp.task('inject', ['styles', 'wiredep'], function() {
 
 gulp.task('optimize', ['inject'], function() {
 
-    var cssFilter = $.filter('**/styles.css', {restore: true});
-    var jsAppFilter = $.filter('**/' + config.optimized.app, {restore: true});
-    var jslibFilter = $.filter('**/' + config.optimized.lib, {restore: true});
-
+    // TODO: lazypipes work, use to minify app.js and lib.js
+    var cssPipe = lazypipe()
+        .pipe($.minifyCss);
 
     // TODO:  Filter's don't seem to be working
     gulp.src(config.index)
         .pipe($.plumber())
-
-        // Get the css
-        .pipe(cssFilter)
-        .pipe($.minifyCss())
-        .pipe(cssFilter.restore)
-
-        // Custom Javascript
-        .pipe(jsAppFilter)
-        .pipe($.ngAnnotate({add: true}))
-        .pipe($.uglify())
-        .pipe(getHeader())
-        .pipe(jsAppFilter.restore)
-
-        // // Vendor Javascript
-        .pipe(jslibFilter)
-        .pipe($.uglify()) // another option is to override wiredep to use min files
-        .pipe(jslibFilter.restore)
-        .pipe($.rev())
-
         .pipe(useref())
-        // .pipe($.if('*.css', $.minifyCss()))
-
-        // .pipe($.revReplace())
+        .pipe($.if('*.css', cssPipe()))
         .pipe(gulp.dest(config.build.path));
+
+
+        //       .pipe(jsAppFilter)
+        // .pipe($.ngAnnotate({add: true}))
+        // .pipe($.uglify())
+        // .pipe(getHeader())
+        // .pipe(jsAppFilter.restore)
+
 });
 
 

@@ -65,6 +65,7 @@
     "gulp-useref": "^3.0.8",
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.1",
+    "lazypipe": "^1.0.1",
     "merge2": "^1.0.1",
     "nodemon": "^1.8.1",
     "rimraf": "^2.5.2",
