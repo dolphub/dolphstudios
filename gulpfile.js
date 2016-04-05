@@ -94,19 +94,22 @@ gulp.task('optimize', ['inject'], function() {
     var cssPipe = lazypipe()
         .pipe($.minifyCss);
 
+    var jsAppPipe = lazypipe()
+        .pipe($.ngAnnotate, { add: true })
+        .pipe($.uglify, { mangle: true })
+        .pipe(getHeader);
+
     // TODO:  Filter's don't seem to be working
     gulp.src(config.index)
         .pipe($.plumber())
         .pipe(useref())
         .pipe($.if('*.css', cssPipe()))
+        .pipe($.if('js/app.js', jsAppPipe()))
         .pipe(gulp.dest(config.build.path));
 
 
         //       .pipe(jsAppFilter)
-        // .pipe($.ngAnnotate({add: true}))
-        // .pipe($.uglify())
-        // .pipe(getHeader())
-        // .pipe(jsAppFilter.restore)
+
 
 });
 
