@@ -14,9 +14,9 @@
             loginUrl: '/login'
         });
         
-        jwtInterceptorProvider.tokenGetter = function(store) {
+        jwtInterceptorProvider.tokenGetter = ['store', function(store) {
             return store.get('token');
-        };
+        }];
         $httpProvider.interceptors.push('jwtInterceptor');
         $httpProvider.interceptors.push('apiInterceptor');
     }

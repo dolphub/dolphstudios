@@ -46,8 +46,28 @@
   "overrides": {
     "bootstrap": {
       "main": [
-        "dist/css/bootstrap.css",
-        "dist/js/bootstrap.js"
+        "dist/css/bootstrap.min.css",
+        "dist/js/bootstrap.min.js"
+      ]
+    },
+    "angular": {
+      "main": [
+        "angular.min.js"
+      ]
+    },
+    "auth0-lock": {
+      "main": [
+        "build/auth0-lock.min.js"
+      ]
+    },
+    "auth0": {
+      "main": [
+        "build/auth0.min.js"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.min.css"
       ]
     }
   }

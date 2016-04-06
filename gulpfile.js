@@ -90,6 +90,9 @@ gulp.task('inject', ['styles', 'wiredep'], function() {
 
 gulp.task('optimize', ['inject'], function() {
 
+    var jsVendorPipe = lazypipe()
+        .pipe($.uglify);
+
     // TODO: lazypipes work, use to minify app.js and lib.js
     var cssPipe = lazypipe()
         .pipe($.minifyCss);
@@ -99,19 +102,24 @@ gulp.task('optimize', ['inject'], function() {
         .pipe($.uglify, { mangle: true })
         .pipe(getHeader);
 
+    
+
     // TODO:  Filter's don't seem to be working
     gulp.src(config.index)
-        .pipe($.plumber())
         .pipe(useref())
+        .pipe($.plumber())
+        .pipe($.bytediff.start())
         .pipe($.if('*.css', cssPipe()))
         .pipe($.if('js/app.js', jsAppPipe()))
+        // .pipe($.if('js/lib.js', $.uglify({mangle: false}))) // Just override bower.json to use minified files
+        .pipe($.bytediff.stop(bytediffFormatter))
         .pipe(gulp.dest(config.build.path));
 
-
-        //       .pipe(jsAppFilter)
-
-
 });
+
+gulp.task('test', function() {
+
+})
 
 
 
