@@ -100,11 +100,8 @@ gulp.task('optimize', ['inject'], function() {
     var jsAppPipe = lazypipe()
         .pipe($.ngAnnotate, { add: true })
         .pipe($.uglify, { mangle: true })
-        .pipe(getHeader);
+        .pipe(getHeader);    
 
-    
-
-    // TODO:  Filter's don't seem to be working
     gulp.src(config.index)
         .pipe(useref())
         .pipe($.plumber())
